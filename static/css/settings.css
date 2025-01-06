@@ -1,0 +1,114 @@
+/*** my additions ***/
+
+/* page title (settings) */
+.page-title {
+    text-align: center;
+    margin-bottom: 50px;
+    font-family: Raleway;
+    font-weight: bold;
+}
+
+/* container for the user's profile picture */
+.pp-container {
+   /* border: 2px solid black;
+    box-sizing: border-box;*/
+}
+
+/* form for the user to enter a new username */
+.new-username {
+    text-align: center;
+    position: absolute;
+    top: 8%;
+    margin-left: 290px;
+    font-family: Raleway;
+}
+
+/* text for telling the user to enter a new username */
+.new-username label {
+    width: 140px;
+    text-align: right; 
+    margin-right: 5px; 
+}
+
+/* input boxes for the user's new username and password */
+.un-pw-input {
+    width: 200px;
+    height: 20px;
+    font-family: Raleway;
+    color:rgb(20, 20, 20)
+}
+
+/* form for the user to enter a new password */
+.new-password {
+    text-align: center;
+    position: absolute;
+    top: 18%;
+    margin-left: 290px;
+    font-family: Raleway;
+}
+
+/* text for telling the user to enter a new password */
+.new-password label {
+    width: 140px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+/* button for letting the user select a new profile picture from their device */
+.change-pp-button {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 50px;
+    width: 150px;
+    border: 2px solid black;
+    box-sizing: border-box;
+    font-family: Raleway;
+    background-color: rgb(252, 199, 54);
+}
+
+/* container for the lists of industry and stock preferences */
+.preferences {
+    
+}
+
+/* list of industry preferences */
+
+
+/* container for save and cancel buttons */
+.save-cancel {
+    display: flex;
+    justify-content: center;
+   /* border: 2px solid black;
+    box-sizing: border-box;*/
+}
+
+/* button for the user to save the changes they want to make to their account */
+.save-button {
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    margin-left: 50px;
+    margin-right: 10px;
+    width: 110px;
+    border: 2px solid black;
+    box-sizing: border-box;
+    font-size: 25px;
+    font-family: Raleway;
+    background-color: rgb(252, 199, 54);
+}
+
+/* button for the user to cancel the changes they might have made to their account */
+.cancel-button {
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    margin-right: 50px;
+    margin-left: 10px;
+    width: 110px; 
+    border: 2px solid black;
+    box-sizing: border-box;
+    font-size: 25px;
+    font-family: Raleway;
+    background-color: rgb(252, 199, 54);
+}

@@ -1,0 +1,132 @@
+.updates-box:nth-child(-n+3) {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin: 0px;
+    margin-bottom: 30px;
+    height: 100px;
+    width: 90%;
+    border: 2px solid black; /* Set a transparent border */
+    /* border-image: linear-gradient(to right, #fe5b32, #fdd404, #fdd404, #fe5b32); Define linear gradient border */
+    /* border-image-slice: 1; Ensure the border image covers the entire border */
+    border-radius: 20px;
+}
+
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown2 {
+    position: relative;
+    display: inline-block;
+    width: 40%;
+    left: 30%;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content2 {
+    display: none;
+    position: relative;
+    background-color: #ffedb6;
+    min-width: 102%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.35);
+    z-index: 1;
+    border: 1px solid black;
+    border-radius: 7px;
+    top: -20px;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content2 a {
+    color: black;
+    padding: 9px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: Barlow;
+    font-weight: 600;
+    height: 35px;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content2 a:hover {
+    background-image: linear-gradient(to right, rgb(255, 77, 0), rgb(255, 204, 0));
+    font-style: italic;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content2 {display: block;}
+
+  #myInput {
+    width: 100%;
+    position: relative;
+    left: 0%;
+    height: 35px;
+    font-family: Raleway;
+    font-size: 28px;
+    margin-bottom: 25px;
+    padding: 5px;
+    border: none;
+    color: white;
+    background-image: linear-gradient(to right, rgb(255, 255, 0), rgb(255, 140, 0));
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.595);
+    top: -15px;
+    padding-left: 20px;
+    font-weight: 800;
+  }
+
+  #myinput::placeholder {
+    color: black ;
+    font-weight: 800;
+  }
+
+  #complogonews {
+    border: 1.6px solid black;
+    border-radius: 50%;
+  }
+
+  .headnewslist {
+    padding: 9px 14px;
+    font-family: Raleway;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 7px;
+    padding-bottom: 16px;
+    height: 10px;
+    display: block;
+  }
+
+  .read0 {
+    position: absolute !important;
+    height: 64px !important; 
+    width: 64px !important;
+    border: none !important;
+    top: -15px !important;
+    left: 92.5% !important;
+    z-index: 2000;
+  }
+
+  .read0:hover {
+    cursor: pointer;
+  }
+
+  .markread {
+    padding: 12px 16px;
+    width: 34%;
+    position: relative;
+    left: 33%;
+    font-family: Barlow;
+    font-size: 28px;
+    font-weight: 880;
+    color: white;
+    background-image: linear-gradient(to right, rgb(255, 89, 0), rgb(255, 0, 170));
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.595);
+  }
+
+  .markread:hover {
+    box-shadow: none;
+    cursor: pointer;
+    scale: 1.1;
+  }

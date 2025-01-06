@@ -1,0 +1,21 @@
+#info-header {
+    padding-top:20px;
+    text-align: center;
+    font-family: Raleway;
+    padding-bottom:10px;
+  }
+  
+  #info-img {
+    padding-top:10px;
+    text-align: center;
+    padding-bottom:10px;
+  }
+  
+  #info-content {
+    text-align: center;
+    padding-bottom:20px;
+    font-family: Raleway;
+    font-size:20px;
+    padding-left: 20px;
+    padding-right:20px;
+  }

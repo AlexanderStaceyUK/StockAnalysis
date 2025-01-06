@@ -1,0 +1,151 @@
+.tutorial img {
+    width: 470px;
+    height: auto;
+}
+
+.tutorial {
+    display: flex;
+    flex-direction: column;
+    width: 470px;
+    z-index: 2000;
+}
+
+.buttonstut {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    align-self: center;
+}
+
+.buttontutind {
+    width: 48%;
+    padding: 7px 10px;
+    font-family: Raleway;
+    font-weight: 900;
+    font-size: 21px;
+    color: white;
+    background-image: linear-gradient(to right, rgb(39, 214, 0), rgb(0, 125, 226));
+    border: 2px solid white;
+    border-radius: 12px;
+    position: relative;
+    top: 9px;
+}
+
+.buttontutind2 {
+    padding: 7px 10px;
+    font-family: Raleway;
+    font-weight: 900;
+    font-size: 21px;
+    color: white;
+    background-image: linear-gradient(to right, rgb(39, 214, 0), rgb(0, 125, 226));
+    border: 2px solid white;
+    border-radius: 12px;
+    position: relative;
+    top: 9px;
+}
+
+.buttontutind:hover, .buttontutind2:hover  {
+    cursor: pointer;
+    scale: 1.1;
+    border: 4px solid white;
+}
+
+#bodscreen {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 380px);
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    left: 0;
+}
+
+#firsttut {
+    position: absolute;
+    top: 255px;
+    align-self: center;
+    left: calc(50% - 320px);
+}
+
+#hometut {
+    position: absolute;
+    top: 55px;
+    left: 0.4%;
+    visibility: hidden;
+}
+
+#expltut {
+    position: absolute;
+    top: 55px;
+    left: 10%;
+    visibility: hidden;
+}
+
+#srchtut {
+    position: absolute;
+    top: 40px;
+    left: 35%;
+    visibility: hidden;
+}
+
+#logregtut {
+    position: absolute;
+    top: 40px;
+    left: 47.9%;
+    visibility: hidden;
+}
+
+#dashtut {
+    position: absolute;
+    top: 40px;
+    left: 49.1%;
+    visibility: hidden;
+}
+
+#logotut {
+    position: absolute;
+    top: 50px;
+    right: 28%;
+    visibility: hidden;
+}
+
+#titletut {
+    position: absolute;
+    top: 170px;
+    left: 35%;
+    visibility: hidden;
+}
+
+#notifytut {
+    position: absolute;
+    top: 110px;
+    left: 1.2%;
+    visibility: hidden;
+}
+
+#firsttut {
+    width: 640px;
+}
+
+#footertut {
+    position: absolute;
+    bottom: 380px;
+    left: calc(50% - 225px);
+    visibility: hidden;
+}
+
+#finaltut {
+    position: absolute;
+    top: 255px;
+    align-self: center;
+    left: calc(50% - 320px);
+    visibility: hidden;
+}
+
+.endtutorial {
+    align-self: center;
+    width: 90%;
+    position: relative;
+    top: 20px;
+}

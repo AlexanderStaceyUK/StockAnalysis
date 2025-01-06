@@ -1,0 +1,645 @@
+@font-face {
+	font-family: Raleway;
+	src: url(/static/fonts/static/Raleway-SemiBold.ttf);
+  }
+
+@font-face {
+	font-family: Oswald;
+	src: url(/static/fonts/static/Oswald-Regular.ttf);
+  }
+
+@font-face {
+	font-family: Phudu;
+	src: url(/static/fonts/static/Phudu-Regular.ttf);
+}
+
+@font-face {
+	font-family: Barlow;
+	src: url(/static/fonts/Barlow-Regular.ttf);
+}
+
+@font-face {
+	font-family: Saira;
+	src: url(/static/fonts/SairaCondensed-Regular.ttf);
+}
+
+@font-face {
+	font-family: Phudu Bolding;
+	src: url(/static/fonts/static/Phudu-SemiBold.ttf);
+}
+
+section {
+    padding: 20px;
+    margin: 20px;
+  }
+  
+  #opinion {
+    border: 1px solid #ccc;
+    height: 370px;
+  }
+  
+  .mini-navbar {
+    position: relative;
+    width: 21.5%;
+    top: -357px;
+    left: 77%;
+    background-color: transparent;
+    border-left: 2px solid black;
+    padding: 10px;
+    padding-left: 21px;
+    padding-top: 5px;
+  }
+  
+  #opinion, #graph, #info, #updates, #suggest {
+    border: transparent;
+    margin-top: 20px;
+  }
+
+  #graph {
+    margin-top: 55px;
+  }
+  
+  
+  
+  
+  #minnav {
+    font-family: Raleway;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 7px;
+    margin-top: 0px;
+  }
+  
+  .minihead {
+    padding-left: 25px;
+    font-family: Oswald;
+    font-size: 25px;
+    text-decoration: none;
+    color: #707070;
+    margin: 0px;
+  }
+  
+  .minihead:hover {
+    color: rgb(255, 183, 0);
+    font-size: 28px;
+  }
+  
+  .navheads {
+    font-family: Oswald;
+    font-size: 28px;
+    text-decoration: none;
+    color: black;
+    margin-bottom: 0px;
+    margin-top: 12px;
+  }
+  
+  .navheads:hover {
+    color: rgb(255, 183, 0);
+    font-size: 30px;
+  }
+  
+  #sec11, #sec12, #sec2, #sec3, #sec4 {
+    padding-top: 15px;
+    text-decoration: none;
+  }
+  
+  .opmeter {
+    border: none;
+    width: 53%;
+    height: 240px;
+    position: relative;
+    left: 22.5%;
+    background-color: transparent;
+  }
+  
+  .opsec {
+    width: 75%;
+  }
+  
+  .statement {
+    text-align: center;
+    font-family: Raleway;
+    font-size: 25px;
+    margin-top: 10px;
+    margin-bottom: 7px;
+  }
+  
+  #graphdata {
+    display: flex;
+  }
+  
+  .info-data {
+    display: flex;
+  }
+  
+  .graph-container {
+    flex: 1;
+    padding-right: 20px;
+  }
+  
+  .info-container {
+    flex: 1;
+    padding-right: 25px;
+    padding-top: 20px;
+  }
+  
+  .info-container1 {
+    flex: 1;
+    padding-right: 20px;
+  }
+  
+  .info-container2 {
+    flex: 1;
+    padding-right: 50px;
+  }
+  
+  .key-information {
+    /* border-bottom: 2px solid rgb(55, 55, 55); */
+    padding-left: 20px;
+  }
+  
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-top: 1px solid rgb(80, 80, 80);
+    font-family: Raleway;
+    font-size: 21px;
+    font-weight: bolder;
+  }
+  
+  #last-infoitem {
+    border-bottom: 1px solid rgb(77, 77, 77);
+  }
+  
+  .info-item p {
+    margin: 0;
+  }
+  
+  .value {
+    color: #878787;
+  }
+  
+  #poschange {
+    color: green;
+  }
+
+  #minchange {
+    color: red;
+  }
+
+  #nochange {
+    color: rgb(255, 187, 0);
+  }
+  
+  .graph-container {
+    flex: 1;
+    padding-right: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  div[class='ct-chart ct-perfect-fourth'] {
+    display: none;
+  }
+  
+  
+  .canvas-toggle {
+    margin-top: 5px;
+    position: relative;
+    left: 30%;
+  }
+  
+  .canvas-toggle button {
+    width: 43px;
+    margin-right: 10px;
+    color: black;
+    background-color: transparent;
+    border: 1px solid rgb(163, 163, 163);
+    font-family: Saira;
+    font-size: 21px;
+    text-align: center;
+  }
+  
+  .canvas-toggle button.active {
+    color: black;
+    background-color: rgb(145, 255, 0);
+    border: 1px solid rgb(145, 255, 0);
+  }
+  
+  .graph-line {
+    border-top: 2px solid rgb(0, 0, 0);
+      position: relative;
+      left: 480px;
+      top: -43px;
+    width: 59%;
+  }
+  
+  .info-line {
+    border-top: 2px solid rgb(0, 0, 0);
+      position: relative;
+      left: 400px;
+      top: -43px;
+    width: 64%;
+  }
+  
+  .updates-line {
+    border-top: 2px solid rgb(0, 0, 0);
+      position: relative;
+      left: 320px;
+      top: -43px;
+    width: 71%;
+  }
+  
+  .suggest-line {
+    border-top: 2px solid rgb(0, 0, 0);
+      position: relative;
+      left: 430px;
+      top: -43px;
+    width: 62%;
+  }
+  
+  .opinion-line {
+    border-top: 2px solid rgb(0, 0, 0);
+      position: relative;
+      left: 340px;
+      top: -43px;
+    width: 59%;
+  }
+  
+  .minititle {
+    margin: 0px;
+    padding-bottom: 32px;
+    font-family: Barlow;
+    font-size: 35px;
+  }
+  
+  #updates {
+    padding: 20px;
+  }
+  
+  .update-box {
+    border: 2px solid #707070;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 2px;
+    margin-bottom: 20px;
+    display: flex;
+    margin-right: 20px;
+  }
+  
+  .update-box img {
+    width: 300px; /* Adjust size as needed */
+    height: auto;
+    margin: 20px;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid black;
+  }
+  
+  .text-info {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .top-text {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 41px;
+    text-align: left;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    width: 144%;
+  }
+  
+  .bottom-text {
+    margin-top: 10px;
+    font-family: Barlow;
+    font-size: 25px;
+    width: 75%;
+  }
+  
+  .green-box {
+    width: 200px;
+    height: 40px;
+    margin-bottom: 30px;
+    margin-right: 45px;
+    background-image: linear-gradient(to right, rgb(0, 255, 162), rgb(32, 91, 0));
+    align-self: flex-end;
+    text-align: center;
+    border: 0.9px solid black;
+    border-radius: 27px;
+    font-family: Raleway;
+    font-size: 30px;
+    align-content: center;
+    font-weight: 1000;
+    color: white;
+  }
+
+  .pink-box {
+    width: 200px;
+    height: 40px;
+    margin-bottom: 30px;
+    margin-right: 45px;
+    background-image: linear-gradient(to right, rgb(255, 115, 0), rgb(197, 0, 0));
+    align-self: flex-end;
+    text-align: center;
+    border: 0.9px solid black;
+    border-radius: 27px;
+    font-family: Raleway;
+    font-size: 30px;
+    align-content: center;
+    color: white;
+  }
+
+  .yellow-box {
+    width: 200px;
+    height: 40px;
+    margin-bottom: 30px;
+    margin-right: 45px;
+    background-image: linear-gradient(to right, rgb(244, 253, 71), rgb(255, 183, 0));
+    align-self: flex-end;
+    text-align: center;
+    border: 0.9px solid black;
+    border-radius: 27px;
+    font-family: Raleway;
+    font-size: 30px;
+    align-content: center;
+  }
+  
+  
+  
+  
+  #company-name {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    padding-right: 30px;
+    padding-left: 30px;
+    background-image: linear-gradient(to right, rgb(255, 77, 0), rgb(255, 121, 4),rgb(255, 174, 0));
+    margin: 0px;
+    height: 100px;
+  }
+  
+  .left-side {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-and-name {
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
+  }
+  
+  .plus-button {
+    background-image: linear-gradient(to right, rgb(0, 255, 213), rgb(0, 132, 255));
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 1000;
+    width: 30px;
+  }
+  
+  .plus-button:hover {
+    background-image: linear-gradient(to right, rgb(0, 132, 255), rgb(0, 255, 213));
+    color: white;
+    scale: 1.1;
+  }
+
+  .plus-button:active {
+    background-image: linear-gradient(to right, rgb(0, 132, 255), rgb(0, 255, 213));
+    color: white;
+    scale: 1.1;
+  }
+
+  .minus-button {
+    background-image: linear-gradient(to right, rgb(255, 149, 0), rgb(255, 0, 102));
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 1000;
+    width: 30px;
+  }
+
+  .hidden {
+    display: none;
+  }
+  
+  .minus-button:hover {
+    background-image: linear-gradient(to right, rgb(255, 0, 102), rgb(255, 149, 0));
+    color: white;
+    scale: 1.1;
+  }
+  
+  .minus-button:active {
+    background-image: linear-gradient(to right, rgb(255, 0, 102), rgb(255, 149, 0));
+    color: white;
+    scale: 1.1;
+  }
+  
+  .right-side {
+    position: relative;
+    align-items: center;
+  }
+  
+  .vertical-line {
+    position: absolute;
+    top: 5%;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 90%;
+    background-color: green;
+  }
+
+  .vertical-line-red {
+    position: absolute;
+    top: 5%;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 90%;
+    background-color: red;
+  }
+  
+  .company-details {
+    padding-right: 30px;
+    text-align: right;
+    align-items: center;
+  }
+  
+  .company-details p {
+    margin: 5px 0;
+  }
+  
+  .price {
+    font-family: Barlow;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  
+  .change {
+    font-family: Barlow;
+    font-size: 23px;
+    font-weight: bold;
+    color: green;
+  }
+
+  .changemin {
+    font-family: Barlow;
+    font-size: 23px;
+    font-weight: bold;
+    color: red;
+  }
+  
+  .size {
+    font-family: Barlow;
+    font-size: 18px;
+    font-weight: lighter;
+  }
+  
+  #complogo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  #name {
+    margin-top: 1px;
+    margin-bottom: 2px;
+    font-family: Raleway;
+    font-weight: bolder;
+    font-size: 28px;
+    position: relative;
+    top: -9.5px;
+    color: black;
+    text-decoration: none;
+  }
+
+  #namelink {
+    color: black;
+    text-decoration: none;
+  }
+  
+  #stock {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-family: Raleway;
+    font-size: 20.5px;
+    position: relative;
+    top: -9.7px;
+  }
+  
+  .add {
+    margin: 0px;
+    font-family: Barlow;
+    font-size: 18px;
+    font-weight: lighter;
+    position: relative;
+    top: -3px;
+  }
+
+  .minus {
+    margin: 0px;
+    font-family: Barlow;
+    font-size: 18px;
+    font-weight: lighter;
+    position: relative;
+    top: -3px;
+  }
+  
+  .namefoll {
+    padding-left: 15px;
+    position: relative;
+    top: 5px;
+  }
+  
+  #comp-analysis {
+    position: relative;
+    font-family: Oswald;
+    font-size: 41px;
+    text-align: center;
+    top: 0px;
+  }
+  
+  .update-list {
+    max-height: 235px; /* Adjust the height as per your requirement */
+    overflow-y: auto; /* Enable vertical scrollbar if content exceeds height */
+  }
+  
+  /* Customize scrollbar */
+  .update-list::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+  
+  /* Track */
+  .update-list::-webkit-scrollbar-track {
+    background: #fff9da; /* Color of the scrollbar track */
+    border-radius: 5px; /* Rounded corners of the scrollbar handle */
+  }
+  
+  /* Handle */
+  .update-list::-webkit-scrollbar-thumb {
+    background: #fbdc2e; /* Color of the scrollbar handle */
+    border-radius: 5px; /* Rounded corners of the scrollbar handle */
+  }
+  
+  /* Handle on hover */
+  .update-list::-webkit-scrollbar-thumb:hover {
+    background: #ff9500; /* Color of the scrollbar handle on hover */
+  }
+  
+  .similar-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin: 0px;
+    margin-bottom: 30px;
+    height: 100px;
+    width: 90%;
+    border: 2px solid black; /* Set a transparent border */
+    /* border-image: linear-gradient(to right, #fe5b32, #fdd404, #fdd404, #fe5b32); Define linear gradient border */
+    /* border-image-slice: 1; Ensure the border image covers the entire border */
+    border-radius: 20px;
+  }
+  
+  .similar-list {
+    max-height: 140px; /* Adjust the height as per your requirement */
+    overflow-y: auto; /* Enable vertical scrollbar if content exceeds height */
+  }
+  
+  /* Customize scrollbar */
+  .similar-list::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+  
+  /* Track */
+  .similar-list::-webkit-scrollbar-track {
+    background: #fff9da; /* Color of the scrollbar track */
+    border-radius: 5px; /* Rounded corners of the scrollbar handle */
+  }
+  
+  /* Handle */
+  .similar-list::-webkit-scrollbar-thumb {
+    background: #fbdc2e; /* Color of the scrollbar handle */
+    border-radius: 5px; /* Rounded corners of the scrollbar handle */
+  }
+  
+  /* Handle on hover */
+  .similar-list::-webkit-scrollbar-thumb:hover {
+    background: #ff9500; /* Color of the scrollbar handle on hover */
+  }
+  
+  

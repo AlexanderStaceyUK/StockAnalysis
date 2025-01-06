@@ -1,0 +1,155 @@
+/* page title (account) */
+.page-title {
+  text-align: center;
+  margin-bottom: 50px;
+  font-family: Raleway;
+  font-weight: bold;
+}
+
+/* greeting for the user */
+.user-greeting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* text for greeting the user */
+.greeting-container {
+  margin-left: 360px;
+  font-family: Raleway;
+}
+
+.settingdash {
+  position: absolute;
+  top: 140px;
+  left: calc(82% - 30px);
+  z-index: 150;
+}
+
+/* container for the user's profile picture */
+.pp-container {
+  border: 1px solid black;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.595);
+  width: 64%;
+  position: relative;
+  left: 18%;
+  display: flex;
+  justify-content: space-between;
+  padding: 25px;
+  /*border: 2px solid black;
+  box-sizing: border-box;*/
+  background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255));
+  max-width: 82%;
+}
+
+/* container for the user's preferences */
+.preferences {
+  display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    /*border: 2px solid black;
+    box-sizing: border-box;*/
+    padding: 10px;
+    font-family: Barlow;
+    font-size: 28px;
+    color: rgb(55, 55, 55);
+    font-weight: 900;
+    margin-left: 35px;
+
+}
+
+.dashname, .dashusername {
+  margin-bottom: 18px;
+}
+
+.propicdash{
+  align-self: center;
+  margin-left: 2%;
+}
+
+#propic {
+  height: 270px;
+  width: 270px;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+/* user's industry preferences */
+.ind-prefs {
+  width: 600px;
+  margin-bottom: 20px;
+}
+
+/* user's stock preferences */
+.stk-prefs {
+  width: 600px;
+}
+
+.inds {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pref-unit {
+  padding: 5px;
+  font-size: 19.9px;
+  color: rgb(255, 255, 255);
+  font-family: Cambria;
+  font-weight: 900;
+  border: 1.5px solid black;
+  border-radius: 16px;
+  background-image: linear-gradient(to right, rgb(255, 102, 0), rgb(255, 0, 183));
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-left: 7px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.395);
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+/* company lists for followed and suggested companies */
+.companiesdash {
+  margin-bottom: 25px;
+  font-family: Raleway;
+  width: 93%;
+  position: relative;
+  left: 3.5%;
+  margin-top: 70px;
+}
+
+.pref {
+  font-family: Raleway;
+  font-weight: 800;
+  font-size: 25px;
+  color: #000000;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+/* settings button */
+.button-image {
+  width: 20px;
+  height: 20px;
+}
+
+.tooltiptext2 {
+  position: absolute;
+  font-family: Raleway;
+  padding: 7px 10px;
+  background-color: rgb(255, 187, 0);
+  border: 2px solid black;
+  border-radius: 10px;
+  top: 200px;
+  left: calc(82% - 51.5px);
+  font-weight: 750px;
+  font-size: 17px;
+  visibility: hidden;
+  text-wrap: wrap;
+  width: 70px;
+  text-align: center;
+  color: black;
+  z-index: 200;
+}
