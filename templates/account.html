@@ -1,0 +1,454 @@
+{% if uname is not none %}
+    {% extends 'userlayout.html' %}
+{% else %}
+    {% extends 'baselayout.html' %}
+{% endif %}
+
+{% block mycontent %}
+                
+                <!-- page's title (dashboard) -->
+                <h1 id="comp-analysis" style="text-transform: uppercase;">
+                    HI {{user.FirstName}} !!, THIS IS YOUR DASHBOARD
+                </h1>
+
+                {% if uname is not none %}
+                {% if updatecount != 0 %}
+                    <div id="upd">
+                        <img id="updbell" src="/static/images/notifications.gif" alt="Example Image">
+                        <img id="updword" src="/static/images/alerts.png" alt="Example Image">
+                    </div>
+
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close"> &#10149; </span>
+                        <!-- Flex items to be displayed -->
+                        <span id="new"> __________ You have {{updatecount}} new notifications !! __________ </span>
+
+                        {% for update in updates2 %}
+                            {% if update.OutlookMetric > 0 %}
+                                <div class="image-item-pos" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if update.OutlookMetric == 0 %}
+                                <div class="image-item-neutral" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if update.OutlookMetric < 0 %}
+                                <div class="image-item-neg" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <script>
+                                var updcount = {{updatecount}};
+
+
+                                document.getElementById("read_{{update.NewsID}}").addEventListener("click", function() {
+                                    // Send an AJAX request to Flask server when button is clicked
+
+                                    updcount = updcount - 1;
+
+                                    var updblk = document.getElementById("update_{{update.NewsID}}");
+
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("GET", "/mark_as_read?parameter=" + {{update.NewsID}}, true);
+                                    xhr.send();
+
+                                    updblk.style.display = "none";
+                                    
+                                });
+
+                                
+                                
+                                // Get the modal
+                                var modal = document.getElementById("myModal");
+
+                                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                                var img = document.getElementById("upd");
+
+                                // Get the <span> element that closes the modal
+                                var span = document.getElementsByClassName("close")[0];
+
+                                // When the user clicks on the image, open the modal
+                                img.onclick = function() {
+                                modal.style.display = "block";
+                                }
+
+                                // When the user clicks on <span> (x), close the modal
+                                span.onclick = function() {
+                                modal.style.display = "none";
+                                }
+
+                                // When the user clicks anywhere outside of the modal, close it
+                                window.onclick = function(event) {
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                                }
+
+                                if (updcount == 0) {
+                                    modal.style.display = "none";
+                                    img.style.display = "none";
+                                }
+
+                            </script>
+                        {% endfor %}
+                        
+                    </div>
+                    </div>
+                {% endif %}
+                {% endif %}
+
+
+                <!-- greeting -->
+                {# <div class="user-greeting">
+                    <div class="greeting-container">
+                        <h3 style="margin: 0px;">Hi, user</h3>
+                    </div>            
+                </div> #}
+                <a href="/settings">
+                    <img src="/static/images/settings.png" class="settingdash" alt="Settings button" width="50px" >
+                    <span class="tooltiptext2"> Update Account </span>
+                </a>
+
+                <script>
+                    const tooltip = document.querySelector('.settingdash');
+
+                    tooltip.addEventListener('mouseover', function() {
+                        const tooltipText = document.querySelector('.tooltiptext2');
+                        tooltipText.style.visibility = 'visible';
+                        tooltipText.style.opacity = '1';
+                    });
+
+                    tooltip.addEventListener('mouseout', function() {
+                        const tooltipText = document.querySelector('.tooltiptext2');
+                        tooltipText.style.visibility = 'hidden';
+                        tooltipText.style.opacity = '0';
+                    });
+                </script>
+
+                <!-- lists of user's industry and stock preferences-->
+                <div class="pp-container">
+
+                    <div class="propicdash">                    
+                        <img src="data:;base64,{{ propic }}" alt="User profile picture" id="propic">
+                    </div>
+
+                    <div class="preferences">
+                        <div class="dashname">
+                            <b class="pref">Name &mdash;</b> {{user.FirstName}} {{user.LastName}}
+                        </div>
+                        <div class="dashusername">
+                            <b class="pref">UserName &mdash;</b> {{user.Username}}
+                        </div>
+                        <div class="ind-prefs">
+                            <p class="pref">Industry preferences &mdash; </p>
+                            <div class="inds">
+                                {% for industry in myindustries %}
+                                    <div class="pref-unit"> {{industry.IndustryName}} </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="stk-prefs">
+                            <p class="pref">Stock preferences &mdash;</p>
+                            <div class="inds">
+                                {% for stock in mystocktypes %}
+                                    <div class="pref-unit"> {{stock.StockType}} </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- list of companies followed by the user -->
+                <div class="companiesdash">
+                    <h3>COMPANIES FOLLOWED BY YOU</h3>
+
+                    <div class="comp-list">
+
+                        {% for comp in follow_list2 %}
+
+                            <div class="similar-box" style="background-image: linear-gradient(to right, rgb(81, 249, 215), rgb(251, 246, 110), rgb(255, 217, 0)); box-shadow: 0 0 12px rgba(0, 0, 0, 0.595); border:1px solid black; width: 88%">
+                                <div class="left-side">
+                                    <div class="logo-and-name">
+                                        
+                                        <a href="{{url_for('companyzoom',companyID=comp.CompanyID)}}">
+                                        {% for img in complogolist %} 
+                                            {% if img['cid'] == comp.CompanyID %}
+                                                <img src="data:;base64,{{ img['cimg'] }}" alt="Company Logo" ondblclick="style.transform = 'scale(1)'" id="complogo">
+                                            {% endif %}
+                                        {% endfor %}
+                                        </a>
+
+                                    </div>
+                                    <div class="namefoll">
+                                        <a href="{{url_for('companyzoom',companyID=comp.CompanyID)}}" id="namelink"><h2 id="name"> {{comp.Name}}</h2></a>
+                                        <h3 id="stock"> {{comp.StockName}}</h2>
+
+                                        {% if comp.CompanyID is in follow_list %}
+                                            <span class="hidden" id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% else %}
+                                            <span id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span class="hidden" id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% endif %}                                    
+                                    </div>
+                                </div>
+
+                                {% if comp.CurrentOpinion > 0 %}
+                                    <div class="green-box"> Positive </div>
+                                {% else %}
+                                    {% if comp.CurrentOpinion < 0 %}
+                                        <div class="pink-box"> Negative </div>
+                                    {% else %}
+                                        <div class="yellow-box"> Average </div>
+                                    {% endif %}
+                                {% endif %}
+
+                                <div class="right-side">
+                                    {% if comp.Change == 1 %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="change">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line"></div>
+                                    {% else %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="changemin">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line-red"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <script>
+
+                                document.querySelector("#pb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr2 = new XMLHttpRequest();
+                                    xhr2.open("GET", "/follow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr2.send();
+                                });
+
+                                document.querySelector("#mb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr3 = new XMLHttpRequest();
+                                    xhr3.open("GET", "/unfollow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr3.send();
+                                });
+                                
+                            </script>
+
+                        {% endfor %}
+
+                        
+
+                    </div>
+
+                    <a href="/followed.html" style="text-decoration: none; color:black;"><button id="applyfilterall" style="margin-bottom: 0px;">View More</button></a>
+
+                </div>
+
+                <!-- list of suggested companies based on user's preferences -->
+                <div class="companiesdash">
+                    <h3>COMPANIES PROGRAM NAME SUGGESTS</h3>
+
+                    <div class="comp-list">
+
+                        {% for comp in suggest_list2 %}
+
+                            <div class="similar-box" style="background-image: linear-gradient(to right, rgb(81, 249, 215), rgb(251, 246, 110), rgb(255, 217, 0)); box-shadow: 0 0 12px rgba(0, 0, 0, 0.595); border:1px solid black; width: 88%">
+                                <div class="left-side">
+                                    <div class="logo-and-name">
+                                        
+                                        <a href="{{url_for('companyzoom',companyID=comp.CompanyID)}}">
+                                        {% for img in complogolist2 %} 
+                                            {% if img['cid'] == comp.CompanyID %}
+                                                <img src="data:;base64,{{ img['cimg'] }}" alt="Company Logo" ondblclick="style.transform = 'scale(1)'" id="complogo">
+                                            {% endif %}
+                                        {% endfor %}
+                                        </a>
+
+                                    </div>
+                                    <div class="namefoll">
+                                        <a href="{{url_for('companyzoom',companyID=comp.CompanyID)}}" id="namelink"><h2 id="name"> {{comp.Name}}</h2></a>
+                                        <h3 id="stock"> {{comp.StockName}}</h2>
+
+                                        {% if comp.CompanyID is in follow_list %}
+                                            <span class="hidden" id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% else %}
+                                            <span id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span class="hidden" id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% endif %}                                    
+                                    </div>
+                                </div>
+
+                                {% if comp.CurrentOpinion > 0 %}
+                                    <div class="green-box"> Positive </div>
+                                {% else %}
+                                    {% if comp.CurrentOpinion < 0 %}
+                                        <div class="pink-box"> Negative </div>
+                                    {% else %}
+                                        <div class="yellow-box"> Average </div>
+                                    {% endif %}
+                                {% endif %}
+
+                                <div class="right-side">
+                                    {% if comp.Change == 1 %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="change">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line"></div>
+                                    {% else %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="changemin">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line-red"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <script>
+
+                                document.querySelector("#pb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr2 = new XMLHttpRequest();
+                                    xhr2.open("GET", "/follow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr2.send();
+                                });
+
+                                document.querySelector("#mb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr3 = new XMLHttpRequest();
+                                    xhr3.open("GET", "/unfollow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr3.send();
+                                });
+                                
+                            </script>
+
+                        {% endfor %}
+
+                        
+
+                    </div>
+
+                    <a href="/suggest.html" style="text-decoration: none; color:black;"><button id="applyfilterall" style="margin-bottom: 0px;">View More</button></a>
+                </div>
+
+                <div class="companiesdash">
+                    <h3>LATEST NEWS UPDATES FOR FOLLOWED COMPANIES</h3>
+
+                    <div class="comp-list">
+
+                        {% for news in updates %}
+                            <div class="update-box" style="border: 2px solid black; position:relative; right:2%; box-shadow:0 0 12px rgba(0, 0, 0, 0.595); margin-bottom: 30px" >
+
+                                {% for img in newsimglist %}
+                                    {% if img['nid'] == news.NewsID %}
+                                        <img src="data:;base64,{{ img['nimg'] }}" id="pos" class="pos" height="170px" style="height: 170px;">
+                                    {% endif %}
+                                {% endfor %}
+
+                                <div class="text-info">
+                                    <p class="top-text"> {{ news.Headline }} </p>
+                                    <p class="bottom-text">News Source &mdash; {{ news.SourceName }}</p>
+                                </div>
+
+                                {% if news.OutlookMetric == 1 %}
+                                    <div class="green-box"> Positive </div>
+                                {% else %}
+                                    <div class="pink-box"> Negative </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a href="/genupdfollow.html" style="text-decoration: none; color:black;"><button id="applyfilterall" style="margin-bottom: 0px;">View More</button></a>
+                 </div>
+
+
+{% endblock %}               

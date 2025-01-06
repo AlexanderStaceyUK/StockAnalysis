@@ -1,0 +1,776 @@
+{% if uname is not none %}
+    {% extends 'userlayout.html' %}
+{% else %}
+    {% extends 'baselayout.html' %}
+{% endif %}
+
+{% block mycontent %}
+
+                <h1 id="comp-analysis"> COMPANY ANALYSIS </h1>
+
+                {% if uname is not none %}
+                {% if updatecount != 0 %}
+                    <div id="upd">
+                        <img id="updbell" src="/static/images/notifications.gif" alt="Example Image">
+                        <img id="updword" src="/static/images/alerts.png" alt="Example Image">
+                    </div>
+
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close"> &#10149; </span>
+                        <!-- Flex items to be displayed -->
+                        <span id="new"> __________ You have {{updatecount}} new notifications !! __________ </span>
+
+                        {% for update in updates %}
+                            {% if update.OutlookMetric > 0 %}
+                                <div class="image-item-pos" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if update.OutlookMetric == 0 %}
+                                <div class="image-item-neutral" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if update.OutlookMetric < 0 %}
+                                <div class="image-item-neg" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <script>
+                                document.getElementById("read_{{update.NewsID}}").addEventListener("click", function() {
+                                    // Send an AJAX request to Flask server when button is clicked
+
+                                    var updblk = document.getElementById("update_{{update.NewsID}}");
+
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("GET", "/mark_as_read?parameter=" + {{update.NewsID}}, true);
+                                    xhr.send();
+
+                                    updblk.style.display = "none";
+                                });
+
+                            </script>
+                        {% endfor %}
+                        
+                    </div>
+                    </div>
+                {% endif %}
+                {% endif %}
+
+                <section id="company-name">
+                    <div class="left-side">
+                        <div class="logo-and-name">
+                            <img src="data:;base64,{{ logo }}" alt="Company Logo" id="complogo">
+                        </div>
+                        <div class="namefoll">
+                            <h2 id="name">{{ company.Name }}</h2>
+                            <h3 id="stock">{{ company.StockName }}</h2>
+                            
+                            {% if company.CompanyID is in follow_list %}
+                                <span class="hidden" id="add_{{company.CompanyID}}"><p class="add"><button id="pb_{{company.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                <span id="minus_{{company.CompanyID}}"><p class="minus"><button id="mb_{{company.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                            {% else %}
+                                <span id="add_{{company.CompanyID}}"><p class="add"><button id="pb_{{company.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                <span class="hidden" id="minus_{{company.CompanyID}}"><p class="minus"><button id="mb_{{company.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                            {% endif %}
+
+                            <script>
+
+                                document.querySelector("#pb_{{company.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("add_{{company.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("minus_{{company.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr2 = new XMLHttpRequest();
+                                    xhr2.open("GET", "/follow_company?parameter=" + {{company.CompanyID}}, true);
+                                    xhr2.send();
+                                });
+
+                                document.querySelector("#mb_{{company.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("minus_{{company.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("add_{{company.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr3 = new XMLHttpRequest();
+                                    xhr3.open("GET", "/unfollow_company?parameter=" + {{company.CompanyID}}, true);
+                                    xhr3.send();
+                                });
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="right-side">
+                        {% if company.Change == 1 %}
+                            <div class="company-details">
+                                <div class="price">
+                                    <p>$ {{ company.CurrentPrice}}</p>
+                                </div>
+                                <div class="change">
+                                    <p> {{ company.LastChange }}</p>
+                                </div>
+                                <div class="size">
+                                    <p> {{ company.Volume }} stocks</p>
+                                </div>
+                            </div>
+                            <div class="vertical-line"></div>
+                        {% else %}
+                            <div class="company-details">
+                                <div class="price">
+                                    <p>$ {{ company.CurrentPrice}}</p>
+                                </div>
+                                <div class="changemin">
+                                    <p> {{ company.LastChange }}</p>
+                                </div>
+                                <div class="size">
+                                    <p> {{ company.Volume }} stocks</p>
+                                </div>
+                            </div>
+                            <div class="vertical-line-red"></div>
+                        {% endif %}
+                    </div>
+                </section>
+
+				<section id="opinion">
+                    <div class="opsec">
+                        <h2 class="minititle">Live Opinion-O-Meter</h2>
+                        <div class="opinion-line"></div>
+
+                        
+                            {% if company.CurrentOpinion == -2 %}
+                                <img src="/static/images/opmtr-2.png" class="opmeter" alt="Opinion Meter - Very Negative" height="210px" width="55%">
+                            {% else %}
+                                {% if company.CurrentOpinion == -1 %}
+                                    <img src="/static/images/opmtr-1.png" class="opmeter" alt="Opinion Meter - Slightly Negative" height="210px" width="55%">
+                                {% else %}
+                                    {% if company.CurrentOpinion == 0 %}
+                                        <img src="/static/images/opmtr0.png" class="opmeter" alt="Opinion Meter - Average" height="210px" width="55%">
+                                    {% else %}
+                                        {% if company.CurrentOpinion == 1 %}
+                                            <img src="/static/images/opmtr1.png" class="opmeter" alt="Opinion Meter - Slightly Positive" height="210px" width="55%">
+                                        {% else %}
+                                            <img src="/static/images/opmtr2.png" class="opmeter" alt="Opinion Meter - Very Positive" height="210px" width="55%">
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        
+                        
+                        <p class="statement">The current feedback is - {{ company.CurrentOpinionWord }} </p>
+                        {% if company.PriceChangeDirection == 1 %}
+                            <p class="statement">Predicted increase of <b style="color: green;">{{ company.PredictedPriceChange }}</b> in the stock price</p>
+                        {% else %}
+                            <p class="statement">Predicted decrease of <b style="color: red;">{{ company.PredictedPriceChange }}</b> in the stock price</p>
+                        {% endif %}
+                    </div>
+            
+                    <nav class="mini-navbar">
+                        <p id="minnav">Page Navigator</p>
+                        <p class="navheads" id="sec1">Live Analysis</p>
+                        <a href="#opinion" id="sec11"><p class="minihead">Opinion - O - Meter</p></a>
+                        <a href="#graph" id="sec12"><p class="minihead">Real-time Stock Price</p></a>
+            
+                        <a href="#info" id="sec2"><p class="navheads">Key Information</p></a>
+            
+                        <a href="#updates" id="sec3"><p class="navheads">Latest News</p></a>
+            
+                        <a href="#suggest" id="sec4"><p class="navheads">Similar Companies</p></a>
+                    </nav>
+                </section>
+            
+                <section id="graph">
+                    <h2 class="minititle">Real-Time Stock Price Analysis</h2>
+                    <div class="graph-line"></div>
+                    
+                    <div id="graphdata">
+                        <div class="graph-container">
+                            <canvas id="graphCanvas1" class="graph-canvas" width="700" height="250" style="max-width: 700px;"></canvas>
+                            <canvas id="graphCanvas2" class="graph-canvas" width="700" height="250" style="max-width: 700px;"></canvas>
+                            <canvas id="graphCanvas3" class="graph-canvas" width="700" height="250" style="max-width: 700px;"></canvas>
+                            <canvas id="graphCanvas4" class="graph-canvas" width="700" height="250" style="max-width: 700px;"></canvas>
+                            <canvas id="graphCanvas5" class="graph-canvas" width="700" height="250" style="max-width: 700px;"></canvas>
+
+                            <div class="canvas-toggle">
+                                <button onclick="toggleCanvas('graphCanvas1')" data-canvas="graphCanvas1"> 1D </button>
+                                <button onclick="toggleCanvas('graphCanvas2')" data-canvas="graphCanvas2"> 1W </button>
+                                <button onclick="toggleCanvas('graphCanvas3')" data-canvas="graphCanvas3"> 1M </button>
+                                <button onclick="toggleCanvas('graphCanvas4')" data-canvas="graphCanvas4"> 6M </button>
+                                <button onclick="toggleCanvas('graphCanvas5')" data-canvas="graphCanvas5"> 1Y </button>
+                            </div>
+                        </div>
+
+                        <script>
+                                    // Get data from Flask template
+                                    var prices3 = [
+                                        {{ company.PriceHour10 }},
+                                        {{ company.PriceHour11 }},
+                                        {{ company.PriceHour12 }},
+                                        {{ company.PriceHour13 }},
+                                        {{ company.PriceHour14 }},
+                                        {{ company.PriceHour15 }}
+                                    ];
+
+                                    // Create an array to hold the dates
+                                    var dates3 = [];
+
+                                    // Get today's date
+                                    var today = new Date();
+
+                                    // Set today's date as the last date in the array
+                                    dates3.push(today.getDate() + '/' + (today.getMonth() + 1));
+
+                                    // Calculate the previous four dates
+                                    for (var i = 1; i <= 5; i++) {
+                                        var prevDate = new Date();
+                                        prevDate.setDate(today.getDate() - i);
+                                        dates3.unshift(prevDate.getDate() + '/' + (prevDate.getMonth() + 1));
+                                    }
+
+                                    // Get canvas context
+                                    var ctx = document.getElementById('graphCanvas1').getContext('2d');
+
+                                    if ({{company.Change}} == 1) {
+                                    // Create chart
+                                    var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: dates3,
+                                            datasets: [{
+                                                label: 'Price',
+                                                backgroundColor: 'rgb(0, 255, 90, 0.2)',
+                                                borderColor: 'rgb(0, 255, 90)',
+                                                data: prices3,
+                                                fill: 'origin', // Fill from the origin (0)
+                                                lineTension: 0, // Disable bezier curve for area chart
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: true,
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        // Set your desired minimum and maximum values for the y-axis here
+                                                        max: Math.ceil(Math.max(...prices3) / 10) * 10 // Adjusted to 105% of the maximum value for some padding
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                    }
+
+                                    if ({{company.Change}} == -1) {
+                                    // Create chart
+                                    var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: dates3,
+                                            datasets: [{
+                                                label: 'Price',
+                                                backgroundColor: 'rgb(255, 0, 20, 0.2)',
+                                                borderColor: 'rgb(255, 0, 20)',
+                                                data: prices3,
+                                                fill: 'origin', // Fill from the origin (0)
+                                                lineTension: 0, // Disable bezier curve for area chart
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: true,
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        // Set your desired minimum and maximum values for the y-axis here
+                                                        max: Math.ceil(Math.max(...prices3) / 10) * 10 // Adjusted to 105% of the maximum value for some padding
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                    }
+
+                                    // Get data from Flask template
+                                    var prices2 = [
+                                        {{ company.PriceDay1 }},
+                                        {{ company.PriceDay2 }},
+                                        {{ company.PriceDay3 }},
+                                        {{ company.PriceDay4 }},
+                                        {{ company.PriceDay5 }},
+                                        {{ company.PriceDay6 }},
+                                        {{ company.PriceDay7 }}
+                                    ];
+
+                                    // Create an array to hold the dates
+                                    var dates2 = [];
+
+                                    // Get today's date
+                                    var today = new Date();
+
+                                    // Set today's date as the last date in the array
+                                    dates2.push(today.getDate() + '/' + (today.getMonth() + 1));
+
+                                    // Calculate the previous four dates
+                                    for (var i = 1; i <= 6; i++) {
+                                        var prevDate = new Date();
+                                        prevDate.setDate(today.getDate() - i);
+                                        dates2.unshift(prevDate.getDate() + '/' + (prevDate.getMonth() + 1));
+                                    }
+
+                                    // Get canvas context
+                                    var ctx = document.getElementById('graphCanvas2').getContext('2d');
+
+                                    // Create chart
+                                    var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: dates2,
+                                            datasets: [{
+                                                label: 'Price',
+                                                backgroundColor: 'rgb(0, 99, 132, 0.2)',
+                                                borderColor: 'rgb(0, 99, 132)',
+                                                data: prices2,
+                                                fill: 'origin', // Fill from the origin (0)
+                                                lineTension: 0, // Disable bezier curve for area chart
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: true,
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        // Set your desired minimum and maximum values for the y-axis here
+                                                        max: Math.ceil(Math.max(...prices2) / 10) * 10 // Adjusted to 105% of the maximum value for some padding
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+
+                                    // Get data from Flask template
+                                    var prices = [
+                                        {{ company.PriceDay1 }},
+                                        {{ company.PriceDay2 }},
+                                        {{ company.PriceDay3 }},
+                                        {{ company.PriceDay4 }},
+                                        {{ company.PriceDay5 }},
+                                        {{ company.PriceDay6 }},
+                                        {{ company.PriceDay7 }},
+                                        {{ company.PriceDay8 }},
+                                        {{ company.PriceDay9 }},
+                                        {{ company.PriceDay10 }},
+                                        {{ company.PriceDay11}},
+                                        {{ company.PriceDay12 }},
+                                        {{ company.PriceDay13 }},
+                                        {{ company.PriceDay14 }},
+                                        {{ company.PriceDay15 }},
+                                        {{ company.PriceDay16 }},
+                                        {{ company.PriceDay17 }},
+                                        {{ company.PriceDay18 }},
+                                        {{ company.PriceDay19 }},
+                                        {{ company.PriceDay20 }},
+                                        {{ company.PriceDay21 }},
+                                        {{ company.PriceDay22 }},
+                                        {{ company.PriceDay23 }},
+                                        {{ company.PriceDay24 }},
+                                        {{ company.PriceDay25 }},
+                                        {{ company.PriceDay26 }},
+                                        {{ company.PriceDay27 }},
+                                        {{ company.PriceDay28 }},
+                                        {{ company.PriceDay29 }},
+                                        {{ company.PriceDay30 }}
+                                    ];
+
+                                    // Create an array to hold the dates
+                                    var dates = [];
+
+                                    // Get today's date
+                                    var today = new Date();
+
+                                    // Set today's date as the last date in the array
+                                    dates.push(today.getDate() + '/' + (today.getMonth() + 1));
+
+                                    // Calculate the previous four dates
+                                    for (var i = 1; i <= 29; i++) {
+                                        var prevDate = new Date();
+                                        prevDate.setDate(today.getDate() - i);
+                                        dates.unshift(prevDate.getDate() + '/' + (prevDate.getMonth() + 1));
+                                    }
+
+                                    // Get canvas context
+                                    var ctx = document.getElementById('graphCanvas3').getContext('2d');
+
+                                    // Create chart
+                                    var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: dates,
+                                            datasets: [{
+                                                label: 'Price',
+                                                backgroundColor: 'rgb(0, 99, 132, 0.2)',
+                                                borderColor: 'rgb(0, 99, 132)',
+                                                data: prices,
+                                                fill: 'origin', // Fill from the origin (0)
+                                                lineTension: 0, // Disable bezier curve for area chart
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: true,
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        // Set your desired minimum and maximum values for the y-axis here
+                                                        max: Math.ceil(Math.max(...prices) / 10) * 10 // Adjusted to 105% of the maximum value for some padding
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                </script>
+                        
+                        <div class="info-container">
+                            
+                            <div class="key-information">
+                                <div class="info-item">
+                                    <p>Current Price:</p>
+                                    <p class="value">$ {{ company.CurrentPrice}}</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Last Change:</p>
+                                    {% if company.Change == 1 %}
+                                        <p id="poschange"> {{ company.LastChange }}</p>
+                                    {% else %}
+                                        <p id="minchange"> {{ company.LastChange }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="info-item">
+                                    <p>Today's Max:</p>
+                                    <p  class="value">$ {{ company.TodaysMax }}</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Last Close:</p>
+                                    <p  class="value">$ {{ company.PreviousClose }}</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Volatility:</p>
+                                    <p class="value"> {{ company.StockType }}</p>
+                                </div>
+                                <div class="info-item" id="last-infoitem">
+                                    <p>Yield:</p>
+                                    <p class="value"> {{ company.Yield }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+            
+                </section>
+            
+                <section id="info">
+                    <h2 class="minititle">Key Company Information</h2>
+                    <div class="info-line"></div>
+                    <!-- Add your info section content here -->
+
+                    <div class="info-data">
+                        <div class="info-container1">
+                                
+                            <div class="key-information">
+                                <div class="info-item">
+                                    <p>Current Price &mdash; </p>
+                                    <p class="value">$ {{ company.CurrentPrice}}</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Current Public Opinion &mdash;</p>
+                                    {% if company.CurrentOpinion > 0 %}
+                                        <p id="poschange">{{ company.CurrentOpinionWord}}</p>
+                                    {% else %}
+                                        {% if company.CurrentOpinion == 0 %}
+                                            <p id="nochange">{{ company.CurrentOpinionWord}}</p>
+                                        {% else %}
+                                            <p id="minchange">{{ company.CurrentOpinionWord}}</p>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                <div class="info-item">
+                                    <p>Industry Sector &mdash;</p>
+                                    <p  class="value">{{ company.IndustryName}}</p>
+                                </div>
+                                <div class="info-item" id="last-infoitem">
+                                    <p>Parent Company &mdash;</p>
+                                    <p class="value">{{ company.Parent}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-container2">
+                                
+                            <div class="key-information">
+                                <div class="info-item">
+                                    <p>Founder / Owner &mdash;</p>
+                                    <p class="value">{{ company.Founder}}</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>CEO &mdash;</p>
+                                    <p class="value">{{ company.CEO}}</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>1 Year Target &mdash;</p>
+                                    <p  class="value">$ {{ company.OneYearTarget}}</p>
+                                </div>
+                                <div class="info-item" id="last-infoitem">
+                                    <p>Max in Last Year &mdash;</p>
+                                    <p class="value">$ {{ company.MaxInTotal}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            
+                <section id="updates">
+                    <h2 class="minititle">Latest News Articles</h2>
+                    <div class="updates-line"></div>
+                    <!-- Add your updates section content here -->
+
+                    <div class="update-list">
+
+                        {% for news in newslist %}
+                            <div class="update-box">
+
+                                {% for img in newsimglist %}
+                                    {% if img['nid'] == news.NewsID %}
+                                        <img src="data:;base64,{{ img['nimg'] }}" onclick="style.transform = 'scale(2)'" ondblclick="style.transform = 'scale(1)'" id="pos" class="pos">
+                                    {% endif %}
+                                {% endfor %}
+
+                                <div class="text-info">
+                                    <p class="top-text"> {{ news.Headline }} </p>
+                                    <p class="bottom-text">News Source &mdash; {{ news.SourceName }}</p>
+                                </div>
+
+                                {% if news.OutlookMetric == 1 %}
+                                    <div class="green-box"> Positive </div>
+                                {% else %}
+                                    <div class="pink-box"> Negative </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </section>
+            
+                <section id="suggest">
+                    <h2 class="minititle">Similar Stocks / Companies</h2>
+                    <div class="suggest-line"></div>
+                    <!-- Add your suggest section content here -->
+
+                    <div class="similar-list">
+
+                        {% for comp in similarlist1 %}
+
+                            <div class="similar-box">
+                                <div class="left-side">
+                                    <div class="logo-and-name">
+                                        
+                                        <a href="{{url_for('companyzoom',companyID=comp.CompanyID)}}">
+                                        {% for img in complogolist %}
+                                            {% if img['cid'] == comp.CompanyID %}
+                                                <img src="data:;base64,{{ img['cimg'] }}" alt="Company Logo" ondblclick="style.transform = 'scale(1)'" id="complogo">
+                                            {% endif %}
+                                        {% endfor %}
+                                        </a>
+
+                                    </div>
+                                    <div class="namefoll">
+                                        <a href="{{url_for('companyzoom',companyID=comp.CompanyID)}}" id="namelink"><h2 id="name"> {{comp.Name}}</h2></a>
+                                        <h3 id="stock"> {{comp.StockName}}</h2>
+
+                                        {% if comp.CompanyID is in follow_list %}
+                                            <span class="hidden" id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% else %}
+                                            <span id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span class="hidden" id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% endif %}                                    
+                                    </div>
+                                </div>
+
+                                {% if comp.CurrentOpinion > 0 %}
+                                    <div class="green-box"> Positive </div>
+                                {% else %}
+                                    {% if comp.CurrentOpinion < 0 %}
+                                        <div class="pink-box"> Negative </div>
+                                    {% else %}
+                                        <div class="yellow-box"> Average </div>
+                                    {% endif %}
+                                {% endif %}
+
+                                <div class="right-side">
+                                    {% if comp.Change == 1 %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="change">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line"></div>
+                                    {% else %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="changemin">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line-red"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <script>
+
+                                document.querySelector("#pb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr2 = new XMLHttpRequest();
+                                    xhr2.open("GET", "/follow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr2.send();
+                                });
+
+                                document.querySelector("#mb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr3 = new XMLHttpRequest();
+                                    xhr3.open("GET", "/unfollow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr3.send();
+                                });
+                                
+                            </script>
+
+                        {% endfor %}
+
+                        
+
+                    </div>
+
+                </section>
+
+
+
+
+                <script>
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // By default, display Canvas 1
+                        toggleCanvas('graphCanvas1');
+                    });
+
+                    function toggleCanvas(canvasId) {
+                        var canvases = document.getElementsByClassName('graph-canvas');
+                        for (var i = 0; i < canvases.length; i++) {
+                            canvases[i].style.display = 'none';
+                        }
+                        document.getElementById(canvasId).style.display = 'block';
+                        
+                        // Remove 'active' class from all buttons
+                        var buttons = document.querySelectorAll('.canvas-toggle button');
+                        buttons.forEach(function(button) {
+                            button.classList.remove('active');
+                        });
+                        
+                        // Add 'active' class to the clicked button
+                        var activeButton = document.querySelector(`button[data-canvas="${canvasId}"]`);
+                        activeButton.classList.add('active');
+                    }
+
+
+
+                    // Get the modal
+                    var modal = document.getElementById("myModal");
+
+                    // Get the image and insert it inside the modal - use its "alt" text as a caption
+                    var img = document.getElementById("upd");
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks on the image, open the modal
+                    img.onclick = function() {
+                    modal.style.display = "block";
+                    }
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() {
+                    modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                    }
+
+                    
+                    
+				</script>
+
+
+{% endblock %}

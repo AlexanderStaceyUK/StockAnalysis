@@ -1,0 +1,25 @@
+{% if uname is not none %}
+    {% extends 'baselayout.html' %}
+{% else %}
+    {% extends 'baselayout.html' %}
+{% endif %}
+
+{% block mycontent %}
+    <h1 id="comp-analysis">
+        LOGIN
+    </h1>
+    <div id="form-cont">
+        <form method="POST" action="/login">
+            
+            <label id="label"> <i class="fas fa-user"></i>   Username</label>
+            <input class="text-field" name="username" type="text" placeholder="Enter Your Username">
+            
+            <label id="label"><i class="fas fa-key"></i>   Password</label>
+            <input class="text-field" type="password" name="password" placeholder="Enter Your Password">
+            
+            <input id="log-button" type="submit" value="Log in">
+        </form>
+
+        <a href="/register" id="reguserlink"><span id="reguser"> Don't have an account yet ? Click here to create a new one </span></a>
+    </div>
+{% endblock %}

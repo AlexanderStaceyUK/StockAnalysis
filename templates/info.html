@@ -1,0 +1,74 @@
+{% if uname is not none %}
+    {% extends 'userlayout.html' %}
+{% else %}
+    {% extends 'baselayout.html' %}
+{% endif %}
+
+{% block mycontent %}
+
+<h1 id="comp-analysis">
+    INFORMATION HUB
+</h1>
+
+<h2 id="info-header">
+    CHANGING PREFERENCES
+</h2>
+
+<div id="info-img">
+    <img src="static/images/preferences.webp" width="600" height="250">
+</div>
+<p id="info-content">
+    When changing account preferences, the current password must be entered in order for these changes to be saved.
+</p>
+
+<h2 id="info-header">
+    LIST OF ALL COMPANIES
+</h2>
+<div id="info-img">
+    <img src="static/images/searchBar.webp" width="700" height="90">
+</div>
+<p id="info-content"> To use the search bar, simply enter the name of the company you wish to find and 
+    press "Enter" or the search button on the right. For advanced searching, press the filter button on the right. In the pop-up window, select your preferences and press the "Apply Filter" button: </p>
+
+<div id="info-img">
+    <img src="static/images/filterInfo.webp" width="500" height="500">
+</div>
+
+<p id="info-content"> To go to the page of the company, click on the name or the icon of the company in the list. You can also press the plus button to follow/unfollow the company: </p>
+<div id="info-img">
+    <img src="static/images/companyCloseup.webp" width="300" height="100">
+</div>
+
+<h2 id="info-header">
+    LATEST NEWS IN THE STOCK MARKET
+</h2>
+
+<div id="info-img">
+    <img src="static/images/newsInfo.webp" width="500" height="300">
+</div>
+<p id="info-content">
+    Hover on the search bar to see the list of all companies. Select one from the list or enter the name of the company
+    to see the list of articles associated with the company. To see all news, press "Reset to all companies" option.
+</p>
+
+<h2 id="info-header">
+    INDIVIDUAL COMPANIES
+</h2>
+
+<div id="info-img">
+    <img src="static/images/pagenavigation.webp" width="309" height="345">
+</div>
+<p id="info-content">
+    Select different sections of the page navigator to quickly move to a particular part of the company analysis page.
+</p>
+
+<div id="info-img" >
+    <img src="static/images/companygraph.gif" width="500" height="750" style="transform: rotate(90deg); position:relative; top:-70px">
+</div>
+
+<p id="info-content" style="position: relative; top:-200px">
+    Navigate through a company's real-time stock price analysis over different time periods by clicking the buttons
+    below the graph. See changes from the past day to the past year.
+</p>
+
+{% endblock %}

@@ -1,0 +1,245 @@
+{% if uname is not none %}
+    {% extends 'userlayout.html' %}
+{% else %}
+    {% extends 'tutorial.html' %}
+{% endif %}
+
+{% block mycontent %}
+    <h1 id="comp-analysis">
+        GROUP 23 WELCOMES YOU TO PROGRAM NAME
+    </h1>
+    <div id="stocks-cont">
+        <div id="stocks-header">5 Best Performing Stocks</div>
+        <div id="stocks-companies-wrapper">
+            {% for stock in first_three %}
+            
+            <div class ="stocks-company" id="stock_{{stock.CompanyID}}">
+                <div id="stocks-company-logo">
+                    {% for img in complogolist %}
+                        {% if img['cid'] == stock.CompanyID %}
+                            <img src="data:;base64,{{ img['cimg'] }}" alt="{{stock.Name}}" height="30px" width="30px" id="complogo2">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="best-data">
+                    <div class="best-data-numbers">
+                        <div id="stocks-company-name">{{stock.Name}}</div>
+                        <div id="stocks-company-name">{{stock.StockName}}</div>
+                        <div id="stocks-company-price">{{stock.CurrentPrice}}</div>
+                        <div id="stocks-company-percentage">{{stock.PercentChange}}</div>
+                    </div>
+                    {% if stock.Change < 1 %}
+                            <div class="vertical-line-red2"></div>
+                        {% else %}
+                            <div class="vertical-line-red2" style="background-color: green;"></div>
+                        {% endif %}
+                </div>
+            </div>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+            <script>
+                $(document).ready(function() {
+                    $("#stock_{{stock.CompanyID}}").click(function() {
+                        // Make AJAX request to Flask method
+                        $.ajax({
+                            type: "POST",
+                            url: "/redirect",  // URL of Flask method
+                            data: {
+                                inputParameter: "{{stock.CompanyID}}"  // Input parameter value
+                            },
+                            success: function(response) {
+                                // Redirect to the returned URL
+                                window.location.href = response.redirect_url;
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Error:", error);
+                            }
+                        });
+                    });
+                });
+
+            </script>
+            {% endfor %}
+        </div>
+        
+        <div id="more-stocks" style="display: none;">
+            {% for stock in next_three %}
+                <div class ="stocks-company" id="stock_{{stock.CompanyID}}">
+                    <div id="stocks-company-logo">
+                        {% for img in complogolist %}
+                            {% if img['cid'] == stock.CompanyID %}
+                                <img src="data:;base64,{{ img['cimg'] }}" alt="{{stock.Name}}" height="30px" width="30px" id="complogo2">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="best-data">
+                        <div class="best-data-numbers">
+                            <div id="stocks-company-name">{{stock.Name}}</div>
+                            <div id="stocks-company-name">{{stock.StockName}}</div>
+                            <div id="stocks-company-price">{{stock.CurrentPrice}}</div>
+                            <div id="stocks-company-percentage">{{stock.PercentChange}}</div>
+                        </div>
+                        {% if stock.Change < 1 %}
+                            <div class="vertical-line-red2"></div>
+                        {% else %}
+                            <div class="vertical-line-red2" style="background-color: green;"></div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+                <script>
+                    $(document).ready(function() {
+                        $("#stock_{{stock.CompanyID}}").click(function() {
+                            // Make AJAX request to Flask method
+                            $.ajax({
+                                type: "POST",
+                                url: "/redirect",  // URL of Flask method
+                                data: {
+                                    inputParameter: "{{stock.CompanyID}}"  // Input parameter value
+                                },
+                                success: function(response) {
+                                    // Redirect to the returned URL
+                                    window.location.href = response.redirect_url;
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error("Error:", error);
+                                }
+                            });
+                        });
+                    });
+
+                </script>
+            {% endfor %}
+            <div class="stocks-company" id="view-more">
+                    <button class="expand-plus"> + </button>
+                    <h3 id="expand-word"> VIEW MORE </h3>
+            </div>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+                <script>
+                    $(document).ready(function() {
+                        $("#view-more").click(function() {
+                            // Make AJAX request to Flask method
+                            $.ajax({
+                                type: "POST",
+                                url: "/redirecttop",  // URL of Flask method
+                                data: {
+                                    inputParameter: "none"  // Input parameter value
+                                },
+                                success: function(response) {
+                                    // Redirect to the returned URL
+                                    window.location.href = response.redirect_url;
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error("Error:", error);
+                                }
+                            });
+                        });
+                    });
+
+                </script>
+        </div>
+
+        <div id="stocks-seemore">
+            <button id="seemore" onclick="toggleMore()"> See more </button>
+        </div>
+
+        <div id="stocks-seemore">
+            <button id="seemore2" onclick="toggleMore()" style="display: none;"> See Less </button>
+        </div>
+        
+    </div>
+
+    <script>
+        function toggleMore() {
+            var moreStocksDiv = document.getElementById('more-stocks');
+            var seemore = document.getElementById('seemore');
+            var seeless = document.getElementById('seemore2');
+            moreStocksDiv.style.display = moreStocksDiv.style.display === 'none' ? 'flex' : 'none';
+            seemore.style.display = seemore.style.display === 'none' ? 'block' : 'none';
+            seeless.style.display = seeless.style.display === 'none' ? 'block' : 'none';
+        }
+
+        
+    </script>
+
+    <div id="news-cont">
+        <div id="news-header">Latest Updates in the Stock Market</div>
+        <div class="newshome">
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+
+           <div class="slideshow-container" id="news-container">
+                {% for newsarticle in news %}
+                <div class="article-unit slide fade" id="article{{ newsarticle.NewsID }}">
+                    {% for img in newsimglist %}
+                        {% if img['nid'] == newsarticle.NewsID %}
+                            <img src="data:;base64,{{ img['nimg'] }}" class="news-image">
+                        {% endif %}
+                    {% endfor %}
+                    <span class="hdline">
+                        {{newsarticle.Headline}}
+                    </span>
+                </div>
+                {% endfor %}
+                
+            </div>
+            
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+            <script>
+                let slideIndex = 1;
+                showSlides(slideIndex);
+
+                function plusSlides(n) {
+                showSlides(slideIndex += n);
+                }
+
+                function currentSlide(n) {
+                showSlides(slideIndex = n);
+                }
+
+                function showSlides(n) {
+                let i;
+                const slides = document.getElementsByClassName("slide");
+                if (n > slides.length) {slideIndex = 1}
+                if (n < 1) {slideIndex = slides.length}
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                slides[slideIndex-1].style.display = "block";
+                }
+
+                // Automatic slideshow
+                let slideInterval = setInterval(() => {
+                plusSlides(1);
+                }, 5000);
+
+                // Pause slideshow on hover
+                const slideshowContainer = document.querySelector('.slideshow-container');
+
+                slideshowContainer.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+                });
+
+                slideshowContainer.addEventListener('mouseleave', () => {
+                slideInterval = setInterval(() => {
+                    plusSlides(1);
+                }, 5000);
+                });
+            </script>
+        </div>
+    </div>
+
+    <div id="features-cont">
+        <div id="features-header">Website features</div>
+        <div id="features-wrapper">
+            <div id="feature">feature</div>
+            <div id="feature">feature</div>
+            <div id="feature">feature</div>
+        </div>
+    </div>
+{% endblock %}

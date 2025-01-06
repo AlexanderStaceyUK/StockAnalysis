@@ -1,0 +1,331 @@
+{% if uname is not none %}
+    {% extends 'userlayout.html' %}
+{% else %}
+    {% extends 'baselayout.html' %}
+{% endif %}
+
+{% block mycontent %}
+
+        <h1 id="comp-analysis" style="text-transform: uppercase;"> LATEST {{compname}} NEWS IN THE STOCK MARKET </h1>
+
+        {% if uname is not none %}
+                {% if updatecount != 0 %}
+                    <div id="upd">
+                        <img id="updbell" src="/static/images/notifications.gif" alt="Example Image">
+                        <img id="updword" src="/static/images/alerts.png" alt="Example Image">
+                    </div>
+
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close"> &#10149; </span>
+                        <!-- Flex items to be displayed -->
+                        <span id="new"> __________ You have {{updatecount}} new notifications !! __________ </span>
+
+                        {% for update in updates %}
+                            {% if update.OutlookMetric > 0 %}
+                                <div class="image-item-pos" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if update.OutlookMetric == 0 %}
+                                <div class="image-item-neutral" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if update.OutlookMetric < 0 %}
+                                <div class="image-item-neg" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <script>
+                                var updcount = {{updatecount}};
+
+
+                                document.getElementById("read_{{update.NewsID}}").addEventListener("click", function() {
+                                    // Send an AJAX request to Flask server when button is clicked
+
+                                    updcount = updcount - 1;
+
+                                    var updblk = document.getElementById("update_{{update.NewsID}}");
+
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("GET", "/mark_as_read?parameter=" + {{update.NewsID}}, true);
+                                    xhr.send();
+
+                                    updblk.style.display = "none";
+                                    
+                                });
+
+                                
+                                
+                                // Get the modal
+                                var modal = document.getElementById("myModal");
+
+                                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                                var img = document.getElementById("upd");
+
+                                // Get the <span> element that closes the modal
+                                var span = document.getElementsByClassName("close")[0];
+
+                                // When the user clicks on the image, open the modal
+                                img.onclick = function() {
+                                modal.style.display = "block";
+                                }
+
+                                // When the user clicks on <span> (x), close the modal
+                                span.onclick = function() {
+                                modal.style.display = "none";
+                                }
+
+                                // When the user clicks anywhere outside of the modal, close it
+                                window.onclick = function(event) {
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                                }
+
+                                if (updcount == 0) {
+                                    modal.style.display = "none";
+                                    img.style.display = "none";
+                                }
+
+                            </script>
+                        {% endfor %}
+                        
+                    </div>
+                    </div>
+                {% endif %}
+                {% endif %}
+
+        <section id="updates">
+            
+            <!-- Add your updates section content here -->
+
+            <div class="dropdown" style="position: relative; width:70%; left:15%">
+            <input type="text" id="myInput" onkeyup="filterDropdown(); scrollToVisible();" placeholder="Type Name to filter the News Updates by Company" style="color: black; text-align:center">
+            <div id="myDropdown" class="dropdown-content2">
+                <a href="/genupdfollow.html"><i class="fas fa-redo"></i>   <span>Reset to all companies</span></a>
+
+                <br>
+                <b class="headnewslist"> Followed Companies _________________</b>
+
+                {% for company in follcompanies %}
+                    <a href="{{url_for('generalfollowcompanyupdates', companyID=company.CompanyID)}}" onclick="handleItemClick('{{company.CompanyID}}')" style="align-self: center;"> 
+                    {% for img in complogolist %}
+                        {% if img['cid'] == company.CompanyID %}
+                            <img src="data:;base64,{{ img['cimg'] }}" alt="{{company.Name}}" height="30px" width="30px" id="complogonews">
+                        {% endif %}
+                    {% endfor %}
+                    <span style="position: relative; top:-7px; left:10px">{{company.Name}} </span>
+                    </a>
+                {% endfor %}
+
+                <br>
+                <b class="headnewslist"> Other Companies _________________</b>
+
+                {% for company in restcompanies %}
+                    <a href="{{url_for('generalfollowcompanyupdates', companyID=company.CompanyID)}}" onclick="handleItemClick('{{company.CompanyID}}')" style="align-self: center;"> 
+                    {% for img in complogolist %}
+                        {% if img['cid'] == company.CompanyID %}
+                            <img src="data:;base64,{{ img['cimg'] }}" alt="{{company.Name}}" height="30px" width="30px" id="complogonews">
+                        {% endif %}
+                    {% endfor %}
+                    <span style="position: relative; top:-7px; left:10px">{{company.Name}} </span>
+                    </a>
+                {% endfor %}
+
+            </div>
+            </div>
+
+            <div class="comp-list">
+
+                {% for news in newslist %}
+                    <div class="update-box" style="position: relative; right:2.7%">
+
+                        {% for img in newsimglist %}
+                            {% if img['nid'] == news.NewsID %}
+                                <img src="data:;base64,{{ img['nimg'] }}" ondblclick="style.transform = 'scale(1)'" id="pos" class="pos" height="170px" style="height: 170px;">
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="text-info">
+                            <p class="top-text"> {{ news.Headline }} </p>
+                            <p class="bottom-text">News Source &mdash; {{ news.SourceName }}</p>
+                        </div>
+
+                        {% if news.OutlookMetric == 1 %}
+                            <div class="green-box"> Positive </div>
+                        {% else %}
+                            <div class="pink-box"> Negative </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+                    {% if compcount == 0 %}
+                        <span id="res0"> No recent major news has popped up about this company in our radar. </span>
+                    {% endif %}
+
+                    {% if compcount > 3 %}
+                        <div class="pagination">
+                            <button class="prev-page"> Previous Page </button>
+                            <button class="next-page"> Next Page </button>
+                        </div>
+                    {% endif %}
+
+
+        </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                        const updateBoxes = document.querySelectorAll('.update-box');
+                        const prevPageBtn = document.querySelector('.prev-page');
+                        const nextPageBtn = document.querySelector('.next-page');
+
+                        let currentPage = 1;
+                        const boxesPerPage = 3;
+                        const totalBoxes = updateBoxes.length;
+                        const totalPages = Math.ceil(totalBoxes / boxesPerPage);
+
+                        function showPage(page) {
+                            const start = (page - 1) * boxesPerPage;
+                            const end = start + boxesPerPage;
+
+                            updateBoxes.forEach((box, index) => {
+                                if (index >= start && index < end) {
+                                    box.style.display = 'flex';
+                                } else {
+                                    box.style.display = 'none';
+                                }
+                            });
+
+                            // Scroll to the top of the page
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                        }
+
+                        prevPageBtn.addEventListener('click', function () {
+                            if (currentPage > 1) {
+                                currentPage--;
+                                showPage(currentPage);
+                            }
+                        });
+
+                        nextPageBtn.addEventListener('click', function () {
+                            if (currentPage < totalPages) {
+                                currentPage++;
+                                showPage(currentPage);
+                            }
+                        });
+
+                        showPage(currentPage);
+                    });
+
+                    function toggleDropdown() {
+                    document.getElementById("myDropdown").classList.toggle("show");
+                    }
+
+                    function handleItemClick(item) {
+                    // Make an AJAX call to Flask method passing the clicked item
+                    fetch('/handle_item_click', {
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ item: item }),
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                        return response.json();
+                        }
+                        throw new Error('Network response was not ok.');
+                    })
+                    .then(data => {
+                        // Handle response data if needed
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+                    }
+
+                    // Function to filter dropdown items based on user input
+                    function filterDropdown() {
+                    var input, filter, dropdown, items, a, i;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    dropdown = document.getElementById("myDropdown");
+                    items = dropdown.getElementsByTagName("a");
+                    itemspan = dropdown.getElementsByTagName("span");
+                    for (i = 0; i < items.length; i++) {
+                        a = itemspan[i];
+                        if (a.innerHTML.toUpperCase().startsWith(filter)) {
+                        items[i].style.display = "";
+                        } else {
+                        items[i].style.display = "none";
+                        }
+                    }
+                    }
+
+                    // Function to scroll to the first visible item in the dropdown
+                    function scrollToVisible() {
+                    var dropdown = document.getElementById("myDropdown");
+                    var items = dropdown.getElementsByTagName("a");
+                    for (var i = 0; i < items.length; i++) {
+                        if (items[i].style.display !== "none") {
+                        dropdown.scrollTop = items[i].offsetTop;
+                        break;
+                        }
+                    }
+                    }
+
+
+        </script>
+
+{% endblock %}

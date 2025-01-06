@@ -1,0 +1,101 @@
+
+{% extends 'baselayout.html' %}
+
+{% block mycontent %}
+    <h1 id="comp-analysis">
+        CREATE A NEW ACCOUNT
+    </h1>
+    <div id="form-cont-reg">
+        <form method="POST" action="/register">
+
+            <div class="reg-name">
+                <div class="first-name-div">
+                    <label id="label">First Name</label>
+                    <input class="text-field" name="first_name" type="text" placeholder="Enter your First Name">
+                </div>
+
+                <div class="first-name-div">
+                    <label id="label">Last Name</label>
+                    <input class="text-field" name="last_name" type="text" placeholder="Enter your Last Name">
+                </div>
+            </div>
+
+            <label id="label"><i class="fas fa-user"></i>  Username</label>
+            <input class="text-field" name="username" type="text" placeholder="Choose an Username">
+
+            <div class="reg-name">
+                <div class="first-name-div">
+                    <label id="label"><i class="fas fa-key"></i>  Password</label>
+                    <input class="text-field" type="password" name="password" placeholder="Choose a Password">
+                </div>
+
+                <div class="first-name-div">
+                    <label id="label"><i class="fas fa-key"></i>  Re-Confirm Password</label>
+                    <input class="text-field" type="password" name="conf-password" placeholder="Re-Type Password">
+                </div>
+            </div>
+            
+            <label id="label">Choose preferred Industry Sectors &mdash;</label>
+            <div class="check-list">
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="technology" value="Technology">
+                    <label for="technology" id="checkbox_item">Technology</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="finance" value="Finance">
+                    <label for="finance" id="checkbox_item">Finance</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="healthcare" value="Healthcare">
+                    <label for="healthcare" id="checkbox_item">Healthcare</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="retail" value="Retail">
+                    <label for="retail" id="checkbox_item">Retail</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="energy" value="Energy">
+                    <label for="energy" id="checkbox_item">Energy</label>
+                </div>
+            </div>
+
+            <label id="label">Choose preferred Types of Stocks &mdash;</label>
+            <div class="check-list">
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="stable" value="Stable">
+                    <label for="stable" id="checkbox_item">Stable</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="volatile" value="Volatile">
+                    <label for="volatile" id="checkbox_item">Volatile</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="blue_chip" value="Blue Chip">
+                    <label for="blue_chip" id="checkbox_item">Blue Chip</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="mutual_fund" value="Mutual Fund">
+                    <label for="mutual_fund" id="checkbox_item">Mutual Fund</label>
+                </div>
+                
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="bonds" value="Bonds">
+                    <label for="bonds" id="checkbox_item">Bonds</label>
+                </div>
+            </div>
+
+            <input id="reg-button" type="submit" value="Register Your Account">
+            <a href="/account" id="loguserlink"><span id="loguser"> Already have an account with us ? Click here to log into your account </span></a>
+
+            
+        </form>
+        
+    </div>
+{% endblock %}

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/static/css/home.css">
+        <link rel="stylesheet" href="/static/css/company.css">
+        <link rel="stylesheet" href="/static/css/alllist.css">
+        <link rel="stylesheet" href="/static/css/logreghome.css">
+        <link rel="stylesheet" href="/static/css/accountstyle.css">
+        <link rel="stylesheet" href="/static/css/settings.css">
+        <link rel="stylesheet" href="/static/css/updates.css">
+        <link rel="stylesheet" href="/static/css/tutorial.css">
+        <link rel="stylesheet" href="/static/css/info.css">
+        <title>Index</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">	</head>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<body>
+			<div class="header" style="z-index: 1500;">
+							
+				<div class="navbar" id="nav">
+					<ul>
+					    <li><a href="/welcome">HOME</a></li>
+
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropbtn">EXPLORE ARENA</a>
+                            <div class="dropdown-content">
+                                <a href="/alllist.html" >     ALL STOCKS</a>
+                                <a href="/toplist.html" >     TOP RANKING</a>
+                                <a href="/genupdates.html" >     LATEST UPDATES</a>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+
+                <div class="search-container">
+                    <form class="srch" action="/search" method="POST">
+                        <input type="search" class="searchemptybox" id="searchbox" placeholder="Search stock name ....." name="search">
+                        <button type="submit" id="searchbutton"><img src="/static/images/search.png" alt="Search" height="20px" width="20px"style="position: relative; right: 4.5px; top:-1px;"></button>
+                    </form>
+                </div>
+
+                <a id="logregid" href="/login"><button id="logreg"> Login / Register </button></a>
+
+                <a id="infolink" href="/info.html"><button id="infobut"> i </button></a>
+
+				<div class="trap">
+					<div class="logo">
+						<a href="/welcome"><img src="/static/images/logotest.png" height="155px" width="415px" style="position : relative; right: 20px; top:-30px"></a>			
+					</div>
+				</div>
+
+                {% for message in get_flashed_messages() %}
+                    <div id="flash1">{{ message }}</div>
+                {% endfor %}
+
+               
+                        
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            <div class="bestautomove" style="position: relative; top:42px">
+                                {% set last_message = messages[-1] %}
+                                <div class="company" id="flash" style="position: relative;">!!  {{ last_message }}  !!</div>
+                            </div>
+                            {% endif %}
+                        
+                        
+
+                        {% if not messages %}
+                            <div class="bestautomove">
+                            <div class="scroller" id="scroller">
+                                {% for topcomp in topcompscroll %}
+                                    <span class="company"> ....... {{topcomp.Name}} &#8702; {{topcomp.LastChange}} ....... </span>
+                                {% endfor %}
+                            </div>
+                            </div>
+                        {% endif %}
+                        {% endwith %}
+                    
+                <div class="tutorial" id="firsttut" style="width: 640px !important;">
+                    <img src="/static/images/maintutorial.png" class="tutimg" id="firsttutimg" style="width: 640px;">
+                    <div class="buttonstut">
+                        <button class="buttontutind2" id="nextfirst" style="width: 90%; left:5%;">Begin Tutorial</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et1" style="width: 81%;">&#10006; Skip / End Tutorial </button>
+                </div>
+
+                <div class="tutorial" id="hometut">
+                    <img src="/static/images/hometutorial.png" class="tutimg" id="hometutimg">
+                    <div class="buttonstut">
+                        <button class="buttontutind" id="prevhome">Prev</button>
+                        <button class="buttontutind" id="nexthome">Next</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et2" >&#10006; Skip / End Tutorial </button>
+                </div>
+
+                <div class="tutorial" id="expltut">
+                    <img src="/static/images/exploretutorial.png" class="tutimg" id="expltutimg">
+                    <div class="buttonstut">
+                        <button class="buttontutind" id="prevexpl">Prev</button>
+                        <button class="buttontutind" id="nextexpl">Next</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et3">&#10006; Skip / End Tutorial </button>
+                </div>
+
+                <div class="tutorial" id="srchtut">
+                    <img src="/static/images/minisearchtutorial.png" class="tutimg" id="srchtutimg">
+                    <div class="buttonstut">
+                        <button class="buttontutind" id="prevsrch">Prev</button>
+                        <button class="buttontutind" id="nextsrch">Next</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et4">&#10006; Skip / End Tutorial </button>
+                </div>
+
+                <div class="tutorial" id="logregtut">
+                    <img src="/static/images/logregtutorial.png" class="tutimg" id="logregtutimg">
+                    <div class="buttonstut">
+                        <button class="buttontutind" id="prevlogreg">Prev</button>
+                        <button class="buttontutind" id="nextlogreg">Next</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et5">&#10006; Skip / End Tutorial </button>
+                </div>
+
+                <div class="tutorial" id="dashtut">
+                    <img src="/static/images/mydashtutorial.png" class="tutimg" id="dashtutimg">
+                    <div class="buttonstut">
+                        <button class="buttontutind" id="prevdash">Prev</button>
+                        <button class="buttontutind" id="nextdash">Next</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et6">&#10006; Skip / End Tutorial </button>
+                </div>
+
+                <div class="tutorial" id="logotut">
+                    <img src="/static/images/logotutorial.png" class="tutimg" id="logotutimg">
+                    <div class="buttonstut">
+                        <button class="buttontutind" id="prevlogo">Prev</button>
+                        <button class="buttontutind" id="nextlogo">Next</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et7">&#10006; Skip / End Tutorial </button>
+                </div>
+
+                <div class="tutorial" id="titletut">
+                    <img src="/static/images/headertutorial.png" class="tutimg" id="titletutimg">
+                    <div class="buttonstut">
+                        <button class="buttontutind" id="prevtitle">Prev</button>
+                        <button class="buttontutind" id="nexttitle">Next</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et8">&#10006; Skip / End Tutorial </button>
+                </div>
+
+                <div class="tutorial" id="notifytut">
+                    <img src="/static/images/notifytutorial.png" class="tutimg" id="notifytutimg" style="width: 510px;">
+                    <div class="buttonstut">
+                        <button class="buttontutind" id="prevnotify">Prev</button>
+                        <button class="buttontutind" id="nextnotify">Next</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et9">&#10006; Skip / End Tutorial </button>
+                </div>
+
+                <div class="tutorial" id="finaltut" style="width: 640px !important;">
+                    <img src="/static/images/finaltutorial.png" class="tutimg" id="finaltutimg"  class="tutimg" id="firsttutimg" style="width: 640px;">
+                    <div class="buttonstut">
+                        <button class="buttontutind" id="prevfinal" style="width: 35%;">Prev</button>
+                        <button class="buttontutind" id="nextfinal" style="width: 59%;"><i class="fas fa-redo"></i> Redo Tutorial</button>
+                    </div>
+                    <button class="buttontutind endtutorial" id="et10">&#10006; Skip / End Tutorial </button>
+                </div>                
+
+			</div>
+
+            <div id="scroll" style="width: 100%; height:0.5px">
+            </div>
+
+            
+
+			<div class="bod0">
+
+                <div id="bodscreen">
+                </div>
+
+				{% block mycontent %}
+				{% endblock %}
+                
+                <br>
+                <br>
+
+                <div class="tutorial" id="footertut">
+                    <button class="buttontutind endtutorial" id="et11" style="position:relative;top: -20px; left:5%;">&#10006; Skip / End Tutorial </button>
+                    <div class="buttonstut" style="position:relative;top: -20px; left:5%">
+                        <button class="buttontutind" id="prevfooter">Prev</button>
+                        <button class="buttontutind" id="nextfooter">Next</button>
+                    </div>
+                    <img src="/static/images/footertutorial.png" class="tutimg" id="footertutimg" style="width: 510px;">
+                </div>
+
+                <footer class="site-footer" id="foot">
+                    <!-- Top row containing logo links to various social media sites -->
+                    <div class="top-row">
+                        <a href="https://www.facebook.com/"><img src="/static/images/fblogo.webp" alt="Facebook" height="35px" width="35px"></a>
+                        <a href="https://www.instagram.com/"><img src="/static/images/instalogo.webp" alt="Instagram" height="35px" width="35px"></a>
+                        <a href="https://twitter.com/?lang=en"><img src="/static/images/twitterlogo.webp" alt="Twitter" height="35px" width="35px"></a>
+                        <a href="https://www.google.com/gmail/about/"><img src="/static/images/gmaillogo.png" alt="Gmail" height="35px" width="35px"></a>
+                    </div>
+
+                    <!-- Middle section containing some text -->
+                    <div class="middle-section">
+                        <p>In the modern era, many public figures and companies face constant scrutiny. Much of this typically comes from the news, 
+                            where stories are constantly published that can produce positive or negative publicity for a company - 
+                            often suddenly and to the surprise of those who are invested.</p>
+
+                        <p>Furthermore, as social media continues to grow, it continues to be a key information source for many - 
+                            providing breaking news, opinion pieces and community wide discussions that can be both a boon and bane 
+                            for public figures. Again, these conversations can happen suddenly and it is not uncommon for a company to 
+                            find itself the subject of bad press overnight.</p>
+                    </div>
+
+                    <!-- Third row containing the logo -->
+                    <div class="third-row">
+                        <img src="/static/images/logotest.png" alt="Company Logo" width="450px">
+                    </div>
+
+                    <!-- Last row containing trademark and copyright information -->
+                    <div class="last-row">
+                        <p style="margin-bottom: 0px;">&copy; 2024 Your Company. All rights reserved.</p>
+                        <p style="margin-bottom: 0px;">Trademark &reg; Company Name</p>
+                    </div>
+                </footer>
+
+			</div>
+
+                <script>
+                
+                    var firsttutor = document.getElementById("firsttut");
+                    var firstnext = document.getElementById("nextfirst");
+
+                    var hometutor = document.getElementById("hometut");
+                    var homeprev = document.getElementById("prevhome");
+                    var homenext = document.getElementById("nexthome");
+
+                    var expltutor = document.getElementById("expltut");
+                    var explprev = document.getElementById("prevexpl");
+                    var explnext = document.getElementById("nextexpl");
+
+                    var srchtutor = document.getElementById("srchtut");
+                    var srchprev = document.getElementById("prevsrch");
+                    var srchnext = document.getElementById("nextsrch");
+
+                    var logregtutor = document.getElementById("logregtut");
+                    var logregprev = document.getElementById("prevlogreg");
+                    var logregnext = document.getElementById("nextlogreg");
+
+                    var dashtutor = document.getElementById("dashtut");
+                    var dashprev = document.getElementById("prevdash");
+                    var dashnext = document.getElementById("nextdash");
+
+                    var logotutor = document.getElementById("logotut");
+                    var logoprev = document.getElementById("prevlogo");
+                    var logonext = document.getElementById("nextlogo");   
+
+                    var titletutor = document.getElementById("titletut");
+                    var titleprev = document.getElementById("prevtitle");
+                    var titlenext = document.getElementById("nexttitle");   
+
+                    var notifytutor = document.getElementById("notifytut");
+                    var notifyprev = document.getElementById("prevnotify");
+                    var notifynext = document.getElementById("nextnotify");
+
+                    var footertutor = document.getElementById("footertut");
+                    var footerprev = document.getElementById("prevfooter");
+                    var footernext = document.getElementById("nextfooter");
+
+                    var finaltutor = document.getElementById("finaltut");
+                    var finalprev = document.getElementById("prevfinal");
+                    var finalnext = document.getElementById("nextfinal");
+
+                    var skiptutor = document.getElementsByClassName("endtutorial");
+
+                    var et1 = document.getElementById("et1");
+
+                    var bodscr = document.getElementById("bodscreen");
+
+                    var foot_page = document.getElementById("foot")
+                    var navpage = document.getElementById("scroll")                    
+
+                    firstnext.onclick = function() {
+                        hometutor.style.visibility = "visible";
+                        firsttutor.style.visibility = "hidden";
+                    }
+
+                    homeprev.onclick = function() {
+                        hometutor.style.visibility = "hidden";
+                        firsttutor.style.visibility = "visible";
+                    }
+                    
+                    homenext.onclick = function() {
+                        hometutor.style.visibility = "hidden";
+                        expltutor.style.visibility = "visible";
+                    }
+
+                    explprev.onclick = function() {
+                        hometutor.style.visibility = "visible";
+                        expltutor.style.visibility = "hidden";
+                    }
+
+                    explnext.onclick = function() {
+                        expltutor.style.visibility = "hidden";
+                        srchtutor.style.visibility = "visible";
+                    }
+
+                    srchprev.onclick = function() {
+                        expltutor.style.visibility = "visible";
+                        srchtutor.style.visibility = "hidden";
+                    }
+
+                    srchnext.onclick = function() {
+                        logregtutor.style.visibility = "visible";
+                        srchtutor.style.visibility = "hidden";
+                    }
+
+                    logregprev.onclick = function() {
+                        logregtutor.style.visibility = "hidden";
+                        srchtutor.style.visibility = "visible";
+                    }
+
+                    logregnext.onclick = function() {
+                        logregtutor.style.visibility = "hidden";
+                        dashtutor.style.visibility = "visible";
+                    }
+
+                    dashprev.onclick = function() {
+                        logregtutor.style.visibility = "visible";
+                        dashtutor.style.visibility = "hidden";
+                    }
+
+                    dashnext.onclick = function() {
+                        dashtutor.style.visibility = "hidden";
+                        logotutor.style.visibility = "visible";
+                    }
+
+                    logoprev.onclick = function() {
+                        logotutor.style.visibility = "hidden";
+                        dashtutor.style.visibility = "visible";
+                    }
+
+                    logonext.onclick = function() {
+                        logotutor.style.visibility = "hidden";
+                        titletutor.style.visibility = "visible";
+                    }
+
+                    titleprev.onclick = function() {
+                        titletutor.style.visibility = "hidden";
+                        logotutor.style.visibility = "visible";
+                    }
+
+                    titlenext.onclick = function() {
+                        titletutor.style.visibility = "hidden";
+                        notifytutor.style.visibility = "visible";
+                    }
+
+                    notifyprev.onclick = function() {
+                        notifytutor.style.visibility = "hidden";
+                        titletutor.style.visibility = "visible";
+                    }
+
+                    notifynext.onclick = function() {
+                        foot_page.scrollIntoView({ behavior: 'smooth' });
+                        notifytutor.style.visibility = "hidden";
+                        footertutor.style.visibility = "visible";
+                    }
+
+                    footerprev.onclick = function() {
+                        navpage.scrollIntoView({ behavior: 'smooth' });
+                        notifytutor.style.visibility = "visible";
+                        footertutor.style.visibility = "hidden";
+                    }
+
+                    footernext.onclick = function() {
+                        navpage.scrollIntoView({ behavior: 'smooth' });
+                        finaltutor.style.visibility = "visible";
+                        footertutor.style.visibility = "hidden";
+                    }
+
+                    finalprev.onclick = function() {
+                        foot_page.scrollIntoView({ behavior: 'smooth' });
+                        finaltutor.style.visibility = "hidden";
+                        footertutor.style.visibility = "visible";
+                    }
+
+                    finalnext.onclick = function() {
+                        finaltutor.style.visibility = "hidden";
+                        hometutor.style.visibility = "visible";
+                    }
+
+                    et1.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et2.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et3.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et4.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et5.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et6.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et7.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et8.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et9.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et10.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    et11.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                    }
+
+                    skiptutor.forEach(function(skiptut) {
+                        skiptut.onclick = function() {
+                            hometutor.style.visibility = "hidden";
+                            firsttutor.style.visibility = "hidden";
+                            expltutor.style.visibility = "hidden";
+                            srchtutor.style.visibility = "hidden";
+                            logregtutor.style.visibility = "hidden";
+                            dashtutor.style.visibility = "hidden";
+                            logotutor.style.visibility = "hidden";
+                            titletutor.style.visibility = "hidden";
+                            notifytutor.style.visibility = "hidden";
+                            footertutor.style.visibility = "hidden";
+                            finaltutor.style.visibility = "hidden";
+                            bodscr.style.visibility = "hidden";
+                        }
+                    })
+
+                </script>
+
+				<script>
+					window.onscroll = function() {myFunction()};
+					
+					var header = document.getElementById("nav");
+					var sticky = header.offsetTop;
+					
+					function myFunction() {
+					  if (window.pageYOffset > sticky) {
+						header.classList.add("sticky");
+					  } else {
+						header.classList.remove("sticky");
+					  }
+					}
+				</script>		
+		
+	</body>
+
+</html>

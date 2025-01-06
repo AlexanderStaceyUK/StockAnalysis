@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/static/css/home.css">
+        <link rel="stylesheet" href="/static/css/company.css">
+        <link rel="stylesheet" href="/static/css/alllist.css">
+        <link rel="stylesheet" href="/static/css/logreghome.css">
+        <link rel="stylesheet" href="/static/css/accountstyle.css">
+        <link rel="stylesheet" href="/static/css/settings.css">
+        <link rel="stylesheet" href="/static/css/updates.css">
+        <link rel="stylesheet" href="/static/css/info.css">
+		<title>Index</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chartist/dist/chartist.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+	
+	<body>
+			<div class="header">
+							
+				<div class="navbar" id="nav">
+					<ul>
+					    <li><a href="/welcome">HOME</a></li>
+
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropbtn">EXPLORE ARENA</a>
+                            <div class="dropdown-content">
+                                <a href="/alllist.html" >     ALL STOCKS</a>
+                                <a href="/toplist.html" >     TOP RANKING</a>
+                                <a href="/followed.html" >     FOLLOWED STOCKS</a>
+                                <a href="/suggest.html" >     SUGGESTED STOCKS</a>
+                                <a href="/genupdfollow.html" >     LATEST NEWS</a>
+                                <a href="/notifications.html" >     NOTIFICATIONS</a>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+
+                <div class="search-container">
+                    <form class="srch" action="/search" method="POST">
+                        <input type="search" class="searchemptybox" id="searchbox" placeholder="Search stock name ....." name="search">
+                        <button type="submit" id="searchbutton"><img src="/static/images/search.png" alt="Search" height="20px" width="20px" style="position: relative; right: 4.5px; top:-1px;"></button>
+                    </form>
+                </div>
+                
+                <a id="logregid" href="/account"><button id="logreg"><i class="fas fa-user"></i>  My Dashboard </button></a>
+                <a id="logoutid" href="/logout"><button id="logout"><i class="fas fa-power-off"></i> <span class="tooltiptext">Log Out</span> </button></a>
+                
+                <a id="infolink" href="/info.html"><button id="infobut"> i </button></a>
+
+				<div class="trap">
+					<div class="logo">
+						<a href="/welcome"><img src="/static/images/logotest.png" height="155px" width="415px" style="position : relative; right: 20px; top:-30px"></a>			
+					</div>
+				</div>
+
+                <div class="bestautomove" style="position: relative; top:28.9px">
+                {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% set last_message = messages[-1] %}
+                                <div class="company" id="flash" style="position: relative;">!!  {{ last_message }}  !!</div>
+                            {% endif %}
+                        
+                        
+
+                        {% if not messages %}
+                            
+                            <div class="scroller" id="scroller">
+                                {% for topcomp in topcompscroll %}
+                                    <span class="company"> ....... {{topcomp.Name}} &#8702; {{topcomp.LastChange}} ....... </span>
+                                {% endfor %}
+                            </div>
+                            
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+
+			</div>
+
+			<div class="bod0">
+				{% block mycontent %}
+				{% endblock %}
+                
+                <br>
+                <br>
+
+                <footer class="site-footer">
+                    <!-- Top row containing logo links to various social media sites -->
+                    <div class="top-row">
+                        <a href="https://www.facebook.com/"><img src="/static/images/fblogo.webp" alt="Facebook" height="35px" width="35px"></a>
+                        <a href="https://www.instagram.com/"><img src="/static/images/instalogo.webp" alt="Instagram" height="35px" width="35px"></a>
+                        <a href="https://twitter.com/?lang=en"><img src="/static/images/twitterlogo.webp" alt="Twitter" height="35px" width="35px"></a>
+                        <a href="https://www.google.com/gmail/about/"><img src="/static/images/gmaillogo.png" alt="Gmail" height="35px" width="35px"></a>
+                    </div>
+
+                    <!-- Middle section containing some text -->
+                    <div class="middle-section">
+                        <p>In the modern era, many public figures and companies face constant scrutiny. Much of this typically comes from the news, 
+                            where stories are constantly published that can produce positive or negative publicity for a company - 
+                            often suddenly and to the surprise of those who are invested.</p>
+
+                        <p>Furthermore, as social media continues to grow, it continues to be a key information source for many - 
+                            providing breaking news, opinion pieces and community wide discussions that can be both a boon and bane 
+                            for public figures. Again, these conversations can happen suddenly and it is not uncommon for a company to 
+                            find itself the subject of bad press overnight.</p>
+                    </div>
+
+                    <!-- Third row containing the logo -->
+                    <div class="third-row">
+                        <img src="/static/images/logotest.png" alt="Company Logo" width="450px">
+                    </div>
+
+                    <!-- Last row containing trademark and copyright information -->
+                    <div class="last-row">
+                        <p style="margin-bottom: 0px;">&copy; 2024 Your Company. All rights reserved.</p>
+                        <p style="margin-bottom: 0px;">Trademark &reg; Company Name</p>
+                    </div>
+                </footer>
+
+			</div>
+
+				<script>
+					window.onscroll = function() {myFunction()};
+					
+					var header = document.getElementById("nav");
+					var sticky = header.offsetTop;
+					
+					function myFunction() {
+					  if (window.pageYOffset > sticky) {
+						header.classList.add("sticky");
+					  } else {
+						header.classList.remove("sticky");
+					  }
+					}
+
+                    // JavaScript to handle hover event
+                    const tooltip = document.querySelector('#logout');
+
+                    tooltip.addEventListener('mouseover', function() {
+                        const tooltipText = this.querySelector('.tooltiptext');
+                        tooltipText.style.visibility = 'visible';
+                        tooltipText.style.opacity = '1';
+                    });
+
+                    tooltip.addEventListener('mouseout', function() {
+                        const tooltipText = this.querySelector('.tooltiptext');
+                        tooltipText.style.visibility = 'hidden';
+                        tooltipText.style.opacity = '0';
+                    });
+				</script>		
+		
+	</body>
+
+</html>

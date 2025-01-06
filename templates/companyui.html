@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="company.css">
+		<title>Index</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	</head>
+	
+	<body>
+			<div class="header">
+							
+				<div class="navbar" id="nav">
+					<ul>
+					    <li><a href="/welcome.html">HOME</a></li>
+
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropbtn">EXPLORE STOCKS</a>
+                            <div class="dropdown-content">
+                                <a href="#" >     ALL STOCKS</a>
+                                <a href="#" >     FOLLOWED STOCKS</a>
+                                <a href="#" >     SUGGESTED STOCKS</a>
+                                <a href="#" >     NOTIFICATIONS</a>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+
+                <div class="search-container">
+                    <form class="srch" action="/search" method="GET">
+                        <input type="search" id="searchbox" placeholder="Search stock name ....." name="search">
+                        <button type="submit" id="searchbutton"><img src="images/search.png" alt="Search" height="20px" width="20px" style="position: relative; right: 4.5px; top:-1px;"></button>
+                    </form>
+                </div>
+
+                <a id="logregid" href="#"></a><button id="logreg"><i class="fas fa-user"></i>  My Dashboard </button></a>
+
+				<div class="trap">
+					<div class="logo">
+						<a href="/welcome.html"><img src="images/logotest.png" height="105px" width="405px" style="position : relative; right: 20px;"></a>			
+					</div>
+				</div>
+
+			</div>
+
+			<div class="bod0">
+
+                <h1 id="comp-analysis"> COMPANY ANALYSIS </h1>
+
+                <section id="company-name">
+                    <div class="left-side">
+                        <div class="logo-and-name">
+                            <img src="images/sample logo.webp" alt="Company Logo" id="complogo">
+                        </div>
+                        <div class="namefoll">
+                            <h2 id="name">Company XYZ</h2>
+                            <h3 id="stock">SCSE XYZ Stock ABC</h2>
+                            <p id="add"><button class="plus-button">+</button>    Follow this Company</p>
+                        </div>
+                    </div>
+                    <div class="right-side">
+                        <div class="company-details">
+                            <div class="price">
+                                <p>$100.15</p>
+                            </div>
+                            <div class="change">
+                                <p>+10.01 (10%)</p>
+                            </div>
+                            <div class="size">
+                                <p>700,000 stocks</p>
+                            </div>
+                        </div>
+                        <div class="vertical-line"></div>
+                    </div>
+                </section>
+
+				<section id="opinion">
+                    <div class="opsec">
+                        <h2 class="minititle">Live Opinion-O-Meter</h2>
+                        <div class="opinion-line"></div>
+
+                        <canvas id="opmeter"></canvas>
+                        
+                        <p class="statement">The current feedback is - </p>
+                    </div>
+            
+                    <nav class="mini-navbar">
+                        <p id="minnav">Page Navigator</p>
+                        <p class="navheads" id="sec1">Live Analysis</p>
+                        <a href="#opinion" id="sec11"><p class="minihead">Opinion - O - Meter</p></a>
+                        <a href="#graph" id="sec12"><p class="minihead">Real-time Stock Price</p></a>
+            
+                        <a href="#info" id="sec2"><p class="navheads">Key Information</p></a>
+            
+                        <a href="#updates" id="sec3"><p class="navheads">Latest News</p></a>
+            
+                        <a href="#suggest" id="sec4"><p class="navheads">Similar Companies</p></a>
+                    </nav>
+                </section>
+            
+                <section id="graph">
+                    <h2 class="minititle">Real-Time Stock Price Analysis</h2>
+                    <div class="graph-line"></div>
+                    
+                    <div id="graphdata">
+                        <div class="graph-container">
+                            <canvas id="graphCanvas1" class="graph-canvas" width="700" height="250"></canvas>
+                            <script src="script.js"></script>
+                            <canvas id="graphCanvas2" class="graph-canvas" width="700" height="250"></canvas>
+                            <canvas id="graphCanvas3" class="graph-canvas" width="700" height="250"></canvas>
+                            <canvas id="graphCanvas4" class="graph-canvas" width="700" height="250"></canvas>
+                            <canvas id="graphCanvas5" class="graph-canvas" width="700" height="250"></canvas>
+
+                            <div class="canvas-toggle">
+                                <button onclick="toggleCanvas('graphCanvas1')" data-canvas="graphCanvas1"> 1D </button>
+                                <button onclick="toggleCanvas('graphCanvas2')" data-canvas="graphCanvas2"> 1W </button>
+                                <button onclick="toggleCanvas('graphCanvas3')" data-canvas="graphCanvas3"> 1M </button>
+                                <button onclick="toggleCanvas('graphCanvas4')" data-canvas="graphCanvas4"> 6M </button>
+                                <button onclick="toggleCanvas('graphCanvas5')" data-canvas="graphCanvas5"> 1Y </button>
+                            </div>
+                        </div>
+                        
+                        <div class="info-container">
+                            
+                            <div class="key-information">
+                                <div class="info-item">
+                                    <p>Current Price:</p>
+                                    <p class="value">$100.15</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Last Change:</p>
+                                    <p id="poschange">+10.15 (10 %)</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Yesterday's Price:</p>
+                                    <p  class="value">$105.00</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Last Close:</p>
+                                    <p  class="value">$97.00</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Volatility:</p>
+                                    <p class="value">Stable</p>
+                                </div>
+                                <div class="info-item" id="last-infoitem">
+                                    <p>Yield:</p>
+                                    <p class="value">5%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+            
+                </section>
+            
+                <section id="info">
+                    <h2 class="minititle">Key Company Information</h2>
+                    <div class="info-line"></div>
+                    <!-- Add your info section content here -->
+
+                    <div class="info-data">
+                        <div class="info-container1">
+                                
+                            <div class="key-information">
+                                <div class="info-item">
+                                    <p>Current Price &mdash; </p>
+                                    <p class="value">$100.15</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Current Public Opinion &mdash;</p>
+                                    <p id="poschange">Slight Positive</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>Industry Sector &mdash;</p>
+                                    <p  class="value">Manufacturing</p>
+                                </div>
+                                <div class="info-item" id="last-infoitem">
+                                    <p>Parent Company &mdash;</p>
+                                    <p class="value">N / A</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-container2">
+                                
+                            <div class="key-information">
+                                <div class="info-item">
+                                    <p>Founder / Owner &mdash;</p>
+                                    <p class="value">Mr. ABC XYZ</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>CEO &mdash;</p>
+                                    <p class="value">Mr. ABC XYZ</p>
+                                </div>
+                                <div class="info-item">
+                                    <p>1 Year Target &mdash;</p>
+                                    <p  class="value">$125.00</p>
+                                </div>
+                                <div class="info-item" id="last-infoitem">
+                                    <p>Max in Last Year &mdash;</p>
+                                    <p class="value">$120.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            
+                <section id="updates">
+                    <h2 class="minititle">Latest News Articles</h2>
+                    <div class="updates-line"></div>
+                    <!-- Add your updates section content here -->
+
+                    <div class="update-list">
+                        <div class="update-box">
+                            <img src="images/stockmarket.webp" alt="Image">
+                            <div class="text-info">
+                                <p class="top-text">Text Headline of the News Update Article written in bold</p>
+                                <p class="bottom-text">News Source &mdash; The Financial Times</p>
+                            </div>
+                            <div class="green-box"> Positive </div>
+                        </div>
+
+                        <div class="update-box">
+                            <img src="images/stockmarket.webp" alt="Image">
+                            <div class="text-info">
+                                <p class="top-text">Text Headline of the News Update Article written in bold</p>
+                                <p class="bottom-text">News Source &mdash; The Financial Times</p>
+                            </div>
+                            <div class="green-box"> Positive </div>
+                        </div>
+                    </div>
+
+                </section>
+            
+                <section id="suggest">
+                    <h2 class="minititle">Similar Stocks / Companies</h2>
+                    <div class="suggest-line"></div>
+                    <!-- Add your suggest section content here -->
+
+                    <div class="similar-list">
+                        <div class="similar-box">
+                            <div class="left-side">
+                                <div class="logo-and-name">
+                                    <img src="images/sample logo.webp" alt="Company Logo" id="complogo">
+                                </div>
+                                <div class="namefoll">
+                                    <h2 id="name">Company XYZ</h2>
+                                    <h3 id="stock">SCSE XYZ Stock ABC</h2>
+                                    <p id="add"><button class="plus-button">+</button>    Follow this Company</p>
+                                </div>
+                            </div>
+                            <div class="green-box"> Positive </div>
+                            <div class="right-side">
+                                <div class="company-details">
+                                    <div class="price">
+                                        <p>$100.15</p>
+                                    </div>
+                                    <div class="change">
+                                        <p>+10.01 (10%)</p>
+                                    </div>
+                                    <div class="size">
+                                        <p>700,000 stocks</p>
+                                    </div>
+                                </div>
+                                <div class="vertical-line"></div>
+                            </div>
+                        </div>
+
+                        <div class="similar-box">
+                            <div class="left-side">
+                                <div class="logo-and-name">
+                                    <img src="images/sample logo.webp" alt="Company Logo" id="complogo">
+                                </div>
+                                <div class="namefoll">
+                                    <h2 id="name">Company XYZ</h2>
+                                    <h3 id="stock">SCSE XYZ Stock ABC</h2>
+                                    <p id="add"><button class="plus-button">+</button>    Follow this Company</p>
+                                </div>
+                            </div>
+                            <div class="green-box"> Positive </div>
+                            <div class="right-side">
+                                <div class="company-details">
+                                    <div class="price">
+                                        <p>$100.15</p>
+                                    </div>
+                                    <div class="change">
+                                        <p>+10.01 (10%)</p>
+                                    </div>
+                                    <div class="size">
+                                        <p>700,000 stocks</p>
+                                    </div>
+                                </div>
+                                <div class="vertical-line"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+                
+                <br>
+                <br>
+                <br>
+
+                <footer class="site-footer">
+                    <!-- Top row containing logo links to various social media sites -->
+                    <div class="top-row">
+                        <a href="#"><img src="images/fblogo.webp" alt="Facebook" height="35px" width="35px"></a>
+                        <a href="#"><img src="images/instalogo.webp" alt="Instagram" height="35px" width="35px"></a>
+                        <a href="#"><img src="images/twitterlogo.webp" alt="Twitter" height="35px" width="35px"></a>
+                        <a href="#"><img src="images/gmaillogo.png" alt="Gmail" height="35px" width="35px"></a>
+                    </div>
+
+                    <!-- Middle section containing some text -->
+                    <div class="middle-section">
+                        <p>In the modern era, many public figures and companies face constant scrutiny. Much of this typically comes from the news, 
+                            where stories are constantly published that can produce positive or negative publicity for a company - 
+                            often suddenly and to the surprise of those who are invested.</p>
+
+                        <p>Furthermore, as social media continues to grow, it continues to be a key information source for many - 
+                            providing breaking news, opinion pieces and community wide discussions that can be both a boon and bane 
+                            for public figures. Again, these conversations can happen suddenly and it is not uncommon for a company to 
+                            find itself the subject of bad press overnight.</p>
+                    </div>
+
+                    <!-- Third row containing the logo -->
+                    <div class="third-row">
+                        <img src="images/logotest.png" alt="Company Logo" width="450px">
+                    </div>
+
+                    <!-- Last row containing trademark and copyright information -->
+                    <div class="last-row">
+                        <p style="margin-bottom: 0px;">&copy; 2024 Your Company. All rights reserved.</p>
+                        <p style="margin-bottom: 0px;">Trademark &reg; Company Name</p>
+                    </div>
+                </footer>
+
+			</div>
+
+				<script>
+					window.onscroll = function() {myFunction()};
+					
+					var header = document.getElementById("nav");
+					var sticky = header.offsetTop;
+					
+					function myFunction() {
+					  if (window.pageYOffset > sticky) {
+						header.classList.add("sticky");
+					  } else {
+						header.classList.remove("sticky");
+					  }
+					}
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // By default, display Canvas 1
+                        toggleCanvas('graphCanvas1');
+                    });
+
+                    function toggleCanvas(canvasId) {
+                        var canvases = document.getElementsByClassName('graph-canvas');
+                        for (var i = 0; i < canvases.length; i++) {
+                            canvases[i].style.display = 'none';
+                        }
+                        document.getElementById(canvasId).style.display = 'block';
+                        
+                        // Remove 'active' class from all buttons
+                        var buttons = document.querySelectorAll('.canvas-toggle button');
+                        buttons.forEach(function(button) {
+                            button.classList.remove('active');
+                        });
+                        
+                        // Add 'active' class to the clicked button
+                        var activeButton = document.querySelector(`button[data-canvas="${canvasId}"]`);
+                        activeButton.classList.add('active');
+                    }
+				</script>	
+
+                
+	</body>
+
+</html>

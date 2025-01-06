@@ -1,0 +1,104 @@
+{% if uname is not none %}
+    {% extends 'userlayout.html' %}
+{% else %}
+    {% extends 'baselayout.html' %}
+{% endif %}
+
+{% block mycontent %}
+
+
+    <h1 id="comp-analysis">
+        SETTINGS
+    </h1>
+    <div id="form-cont-sett">
+        <form method="POST" action="/settings" enctype="multipart/form-data">
+
+            <div id="profile-pic">
+                <img src="data:;base64,{{ propic }}" style="height: 250px; border-radius: 50%; border:4px solid rgb(36, 11, 0)" alt="Your profile picture" width="250px">
+            <br>
+                <label for="fileInput" id="change-pic-button">Choose a new picture</label>
+                <input type="file" id="fileInput" name="profile_pict" accept="image/*" style="display:none;" >
+
+            </div>
+            <label id="label"><i class="fas fa-user"></i> New Username</label>
+            <input class="text-field" name="username" type="text" placeholder="Choose an Username">
+            <div class="first-name-div">
+                <label id="label"><i class="fas fa-key"></i> Old Password *</label>
+                <input class="text-field" type="password" name="old-password" placeholder="Enter Current Password">
+            </div> 
+            <div class="reg-name">
+                <div class="first-name-div">
+                    <label id="label"><i class="fas fa-key"></i> New Password</label>
+                    <input class="text-field" type="password" name="password" placeholder="Choose a New Password">
+                </div>
+
+                <div class="first-name-div">
+                    <label id="label"><i class="fas fa-key"></i>  Re-Confirm New Password</label>
+                    <input class="text-field" type="password" name="conf-password" placeholder="Re-Type Password">
+                </div>
+            </div>
+            
+            <label id="label">Choose preferred Industry Sectors &mdash;</label>
+            <div class="check-list">
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="technology" value="Technology">
+                    <label for="technology" id="checkbox_item">Technology</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="finance" value="Finance">
+                    <label for="finance" id="checkbox_item">Finance</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="healthcare" value="Healthcare">
+                    <label for="healthcare" id="checkbox_item">Healthcare</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="retail" value="Retail">
+                    <label for="retail" id="checkbox_item">Retail</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="energy" value="Energy">
+                    <label for="energy" id="checkbox_item">Energy</label>
+                </div>
+            </div>
+
+            <label id="label">Choose preferred Types of Stocks &mdash;</label>
+            <div class="check-list">
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="stable" value="Stable">
+                    <label for="stable" id="checkbox_item">Stable</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="volatile" value="Volatile">
+                    <label for="volatile" id="checkbox_item">Volatile</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="blue_chip" value="Blue Chip">
+                    <label for="blue_chip" id="checkbox_item">Blue Chip</label>
+                </div>
+
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="mutual_fund" value="Mutual Fund">
+                    <label for="mutual_fund" id="checkbox_item">Mutual Fund</label>
+                </div>
+                
+                <div class="checkbox-set">
+                    <input class="chkbox" type="checkbox" name="bonds" value="Bonds">
+                    <label for="bonds" id="checkbox_item">Bonds</label>
+                </div>
+            </div>
+
+            <input id="reg-button" type="submit" value="Save Changes">
+            <a href="/account" id="loguserlink"><span id="loguser"> No longer want to change settings ? Click here to return to your dashboard </span></a>
+
+            
+        </form>
+        
+    </div>
+{% endblock %}

@@ -1,0 +1,452 @@
+{% if uname is not none %}
+    {% extends 'userlayout.html' %}
+{% else %}
+    {% extends 'baselayout.html' %}
+{% endif %}
+
+{% block mycontent %}
+
+                <h1 id="comp-analysis" style="text-transform: uppercase;"> COMPANIES PROGRAM NAME SUGGESTS YOU </h1>
+
+                {% if uname is not none %}
+                {% if updatecount != 0 %}
+                    <div id="upd">
+                        <img id="updbell" src="/static/images/notifications.gif" alt="Example Image">
+                        <img id="updword" src="/static/images/alerts.png" alt="Example Image">
+                    </div>
+
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close"> &#10149; </span>
+                        <!-- Flex items to be displayed -->
+                        <span id="new"> __________ You have {{updatecount}} new notifications !! __________ </span>
+
+                        {% for update in updates %}
+                            {% if update.OutlookMetric > 0 %}
+                                <div class="image-item-pos" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if update.OutlookMetric == 0 %}
+                                <div class="image-item-neutral" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if update.OutlookMetric < 0 %}
+                                <div class="image-item-neg" id="update_{{update.NewsID}}">
+                                    <div class="upd-content"> 
+                                        <span class="headline">{{ update.Headline }}</span><br>
+                                        <span class="source">Source &mdash; {{ update.SourceName }}</span>
+                                    </div>
+                                    <div class="opinion">
+                                        <div class="outlook">
+                                            {% if update.OutlookMetric > 0 %} Positive {% endif %}
+                                            {% if update.OutlookMetric == 0 %} Neutral {% endif %}
+                                            {% if update.OutlookMetric < 0 %} Negative {% endif %}
+                                        </div>
+                                        <div class="read" id="read_{{update.NewsID}}">
+                                            Mark as Read
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <script>
+                                var updcount = {{updatecount}};
+
+
+                                document.getElementById("read_{{update.NewsID}}").addEventListener("click", function() {
+                                    // Send an AJAX request to Flask server when button is clicked
+
+                                    updcount = updcount - 1;
+
+                                    var updblk = document.getElementById("update_{{update.NewsID}}");
+
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("GET", "/mark_as_read?parameter=" + {{update.NewsID}}, true);
+                                    xhr.send();
+
+                                    updblk.style.display = "none";
+                                    
+                                });
+
+                                
+                                
+                                // Get the modal
+                                var modal = document.getElementById("myModal");
+
+                                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                                var img = document.getElementById("upd");
+
+                                // Get the <span> element that closes the modal
+                                var span = document.getElementsByClassName("close")[0];
+
+                                // When the user clicks on the image, open the modal
+                                img.onclick = function() {
+                                modal.style.display = "block";
+                                }
+
+                                // When the user clicks on <span> (x), close the modal
+                                span.onclick = function() {
+                                modal.style.display = "none";
+                                }
+
+                                // When the user clicks anywhere outside of the modal, close it
+                                window.onclick = function(event) {
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                                }
+
+                                if (updcount == 0) {
+                                    modal.style.display = "none";
+                                    img.style.display = "none";
+                                }
+
+                            </script>
+                        {% endfor %}
+                        
+                    </div>
+                    </div>
+                {% endif %}
+                {% endif %}
+
+                <div class="search-container2">
+                    <form class="srch2" action="/searchfollowed" method="POST">
+                        <input type="search" class="searchemptybox" id="searchbox2" placeholder="Search company or stock name ....." name="search">
+                        <button type="submit" id="searchbutton2"><img src="/static/images/search.png" alt="Search" height="40px" width="40px" ></button>
+                    </form>
+                    <img id="filter" src="static/images/filter.png" alt="Logo">
+                </div>
+
+                 <!-- The Modal -->
+                    <div id="myModal2" class="modal2">
+                    <!-- Modal content -->
+                    <div class="modal-content2">
+                        <span class="close2"> &#10149; </span>
+                        <!-- Flex items to be displayed -->
+                        <span id="new2"> __________ FILTER COMPANIES __________ </span>
+
+                        <form id="filter_form" action="/submitfollowed" method="post">
+
+                            <div class="question" id="comstsearch">
+                                <div class="formlist" id="comsearch">
+                                    
+                                        <div class="schbar">
+                                            <input type="search" class="searchemptybox" id="comstname" name="search3" placeholder="Search company or stock name .....">
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="question" id="industry">
+                                <p class="mini-ques"> Choose Industry Sectors &mdash; </p>
+                                <div class="formlist" id="industrylist">
+                                    {% for industry in industry_list %}
+                                        <div class="indus">
+                                            <input class="chkbox" type="checkbox" id="q_{{industry.IndustryName}}" name="{{industry.IndustryName}}" value="{{industry.IndustryName}}">
+                                            <label for="q_{{industry.IndustryName}}">  {{industry.IndustryName}}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="question" id="stocktest">
+                                <p class="mini-ques"> Choose Stock Stability Type &mdash; </p>
+                                <div class="formlist" id="stocklist">
+                                    {% for stock in stock_list %}
+                                        <div class="stockitem">
+                                            <input class="chkbox" type="checkbox" id="q_{{stock.StockType}}" name="{{stock.StockType}}" value="{{stock.StockType}}">
+                                            <label for="q_{{stock.StockType}}">  {{stock.StockType}}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="question" id="other">
+                                <p class="mini-ques"> Choose Other Filters &mdash; </p>
+                                <div class="formlist" id="othfil">
+                                    
+                                        <div class="otherfilter">
+                                            <input class="chkbox" type="checkbox" id="poschnge" name="posichnge" value="+ch">
+                                            <label for="poschnge">  Positive Increase</label>
+                                        </div>
+
+                                        <div class="otherfilter">
+                                            <input class="chkbox" type="checkbox" id="posop" name="posiop" value="+op">
+                                            <label for="posop">  Positive Opinion</label>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+
+                            <a href="#"><input id="applyfilterall" type="submit" value="Apply Filter"></a>
+
+
+                        </form>
+
+                    </div>
+                    </div>
+                        
+                    
+
+                <section id="suggest">
+
+                    <div class="comp-list">
+
+                        {% for comp in company %}
+
+                            <div class="similar-box">
+                                <div class="left-side">
+                                    <div class="logo-and-name">
+
+                                        <a href="{{url_for('companyzoom',companyID=comp.CompanyID)}}">
+                                        {% for img in complogolist %}
+                                            {% if img['cid'] == comp.CompanyID %}
+                                                <img src="data:;base64,{{ img['cimg'] }}" alt="Company Logo" ondblclick="style.transform = 'scale(1)'" id="complogo">
+                                            {% endif %}
+                                        {% endfor %}
+                                        </a>
+
+                                    </div>
+                                    <div class="namefoll">
+                                        <a href="{{url_for('companyzoom',companyID=comp.CompanyID)}}" id="namelink"><h2 id="name"> {{comp.Name}}</h2></a>
+                                        <h3 id="stock"> {{comp.StockName}}</h2>
+
+                                        {% if comp.CompanyID is in follow_list %}
+                                            <span class="hidden" id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% else %}
+                                            <span id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span class="hidden" id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+
+                                {% if comp.CurrentOpinion > 0 %}
+                                    <div class="green-box"> Positive </div>
+                                {% else %}
+                                    {% if comp.CurrentOpinion < 0 %}
+                                        <div class="pink-box"> Negative </div>
+                                    {% else %}
+                                        <div class="yellow-box"> Average </div>
+                                    {% endif %}
+                                {% endif %}
+
+                                <div class="right-side">
+                                    {% if comp.Change == 1 %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="change">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line"></div>
+                                    {% else %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="changemin">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line-red"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <script>
+
+                                document.querySelector("#pb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr2 = new XMLHttpRequest();
+                                    xhr2.open("GET", "/follow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr2.send();
+                                });
+
+                                document.querySelector("#mb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr3 = new XMLHttpRequest();
+                                    xhr3.open("GET", "/unfollow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr3.send();
+                                });
+                            </script>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% if compcount == 0 %}
+                        <span id="res0"> No such Company or Stock found. Please retry with a different keyword </span>
+                    {% endif %}
+
+                    {% if compcount > 3 %}
+                        <div class="pagination">
+                            <button class="prev-page"> Previous Page </button>
+                            <button class="next-page"> Next Page </button>
+                        </div>
+                    {% endif %}
+
+                </section>
+
+
+
+
+
+
+                <script>
+					document.addEventListener('DOMContentLoaded', function () {
+                        const updateBoxes = document.querySelectorAll('.similar-box');
+                        const prevPageBtn = document.querySelector('.prev-page');
+                        const nextPageBtn = document.querySelector('.next-page');
+
+                        let currentPage = 1;
+                        const boxesPerPage = 3;
+                        const totalBoxes = updateBoxes.length;
+                        const totalPages = Math.ceil(totalBoxes / boxesPerPage);
+
+                        function showPage(page) {
+                            const start = (page - 1) * boxesPerPage;
+                            const end = start + boxesPerPage;
+
+                            updateBoxes.forEach((box, index) => {
+                                if (index >= start && index < end) {
+                                    box.style.display = 'flex';
+                                } else {
+                                    box.style.display = 'none';
+                                }
+                            });
+
+                            // Scroll to the top of the page
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                        }
+
+                        prevPageBtn.addEventListener('click', function () {
+                            if (currentPage > 1) {
+                                currentPage--;
+                                showPage(currentPage);
+                            }
+                        });
+
+                        nextPageBtn.addEventListener('click', function () {
+                            if (currentPage < totalPages) {
+                                currentPage++;
+                                showPage(currentPage);
+                            }
+                        });
+
+                        showPage(currentPage);
+                    });
+
+                    function removeNotification(newsId) {
+                        // Send AJAX request to mark notification as read
+                        fetch('/mark_read/' + newsId, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }).then(response => {
+                            if (response.ok) {
+                                // Remove notification box from DOM
+                                document.querySelector('.notification-box').remove();
+                            }
+                        }).catch(error => {
+                            console.error('Error marking notification as read:', error);
+                        });
+                    }
+
+                    // Get the modal
+                                var modal2 = document.getElementById("myModal2");
+
+                                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                                var img2 = document.getElementById("filter");
+
+                                // Get the <span> element that closes the modal
+                                var span2 = document.getElementsByClassName("close2")[0];
+
+                                // When the user clicks on the image, open the modal
+                                img2.onclick = function() {
+                                modal2.style.display = "block";
+                                }
+
+                                // When the user clicks on <span> (x), close the modal
+                                span2.onclick = function() {
+                                modal2.style.display = "none";
+                                }
+
+                                // When the user clicks anywhere outside of the modal, close it
+                                window.onclick = function(event) {
+                                if (event.target == modal2) {
+                                    modal2.style.display = "none";
+                                }
+                                }
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Get all checkboxes
+                        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                        
+                        // Loop through each checkbox and set its checked attribute to false
+                        checkboxes.forEach(function(checkbox) {
+                            checkbox.checked = false;
+                        });
+
+                        var searchBoxs = document.getElementsByClassName('searchemptybox');
+
+                        searchBoxs.forEach(function(searchbox) {
+                            searchbox.value = "";
+                            searchbox.placeholder = "";
+
+                        });
+                    });
+
+            
+				</script>
+
+
+{% endblock %}

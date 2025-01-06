@@ -1,0 +1,138 @@
+{% if uname is not none %}
+    {% extends 'userlayout.html' %}
+{% else %}
+    {% extends 'baselayout.html' %}
+{% endif %}
+
+{% block mycontent %}
+
+    <h1 id="comp-analysis" style="text-transform: uppercase;"> {{name}} ' S   NOTIFICATIONS </h1>
+
+    <span id="res0"> ** Program Name only stores a maximum of 15 notifications for each user. </span>
+
+    <img src="/static/images/notify.png" style="position: relative; width:82%; left:9%; margin-top:25px; margin-bottom:25px;">
+
+    <a href="/markallread" style="text-decoration: none; color:black;"> <button class="markread">Mark all as Read</button> </a>
+
+    <section id="suggest">
+
+        <div class="comp-list">
+
+                {% for news in newslist %}
+                    
+                    <div class="update-box" style="position: relative; right:2.7%; margin-bottom:35px">
+                        {% for notify in notifications %}
+                            {% if notify.NewsID == news.NewsID%}
+                                {% if notify.Read == 0 %}
+                                    <img id="read_{{news.NewsID}}" src="/static/images/seen.png" class="read0" height="40px" width="40px" style="visibility: hidden;">
+                                    <img id="unread_{{news.NewsID}}" src="/static/images/unseen.webp" class="read0" height="40px" width="40px" style="visibility:visible;">
+                                {% else %}
+                                    <img src="/static/images/seen.png" class="read0" height="40px" width="40px">
+                                {% endif %}
+
+                                <script>
+                                    document.getElementById("unread_{{news.NewsID}}").addEventListener("click", function() {
+                                                // Send an AJAX request to Flask server when button is clicked
+
+                                                var read = document.getElementById("read_{{news.NewsID}}");
+                                                var unread = document.getElementById("unread_{{news.NewsID}}");
+
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.open("GET", "/mark_as_read?parameter=" + {{news.NewsID}}, true);
+                                                xhr.send();
+
+                                                read.style.visibility = "visible";
+                                                unread.style.visibility = "hidden";
+                                                
+                                            });
+                                </script>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for img in newsimglist %}
+                            {% if img['nid'] == news.NewsID %}
+                                <img src="data:;base64,{{ img['nimg'] }}" ondblclick="style.transform = 'scale(1)'" id="pos" class="pos" height="170px" style="height: 170px;">
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="text-info">
+                            <p class="top-text" style="font-size: 32px;"> {{ news.Headline }} </p>
+                            <p class="bottom-text" style="margin-bottom: 9px;">News Source &mdash; {{ news.SourceName }}</p>
+                            <p class="bottom-text" style="width: 90%;">Time of Origin &mdash; {{ news.Timestamp }}</p>
+                        </div>
+
+                        {% if news.OutlookMetric == 1 %}
+                            <div class="green-box"> Positive </div>
+                        {% else %}
+                            <div class="pink-box"> Negative </div>
+                        {% endif %}
+                    </div>
+
+                    
+                {% endfor %}
+            </div>
+
+                    {% if compcount == 0 %}
+                        <span id="res0"> No recent major news has popped up about this company in our radar. </span>
+                    {% endif %}
+
+                    {% if compcount > 3 %}
+                        <div class="pagination">
+                            <button class="prev-page"> Previous Page </button>
+                            <button class="next-page"> Next Page </button>
+                        </div>
+                    {% endif %}
+
+
+        </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                        const updateBoxes = document.querySelectorAll('.update-box');
+                        const prevPageBtn = document.querySelector('.prev-page');
+                        const nextPageBtn = document.querySelector('.next-page');
+
+                        let currentPage = 1;
+                        const boxesPerPage = 3;
+                        const totalBoxes = updateBoxes.length;
+                        const totalPages = Math.ceil(totalBoxes / boxesPerPage);
+
+                        function showPage(page) {
+                            const start = (page - 1) * boxesPerPage;
+                            const end = start + boxesPerPage;
+
+                            updateBoxes.forEach((box, index) => {
+                                if (index >= start && index < end) {
+                                    box.style.display = 'flex';
+                                } else {
+                                    box.style.display = 'none';
+                                }
+                            });
+
+                            // Scroll to the top of the page
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                        }
+
+                        prevPageBtn.addEventListener('click', function () {
+                            if (currentPage > 1) {
+                                currentPage--;
+                                showPage(currentPage);
+                            }
+                        });
+
+                        nextPageBtn.addEventListener('click', function () {
+                            if (currentPage < totalPages) {
+                                currentPage++;
+                                showPage(currentPage);
+                            }
+                        });
+
+                        showPage(currentPage);
+                    });
+
+            </script>
+
+{% endblock %}

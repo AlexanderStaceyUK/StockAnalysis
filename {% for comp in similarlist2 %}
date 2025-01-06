@@ -1,0 +1,91 @@
+{% for comp in similarlist2 %}
+
+                            <div class="similar-box">
+                                <div class="left-side">
+                                    <div class="logo-and-name">
+
+                                        {% for img in complogolist %}
+                                            {% if img['cid'] == comp.CompanyID %}
+                                                <img src="data:;base64,{{ img['cimg'] }}" alt="Company Logo" onclick="style.transform = 'scale(2)'" ondblclick="style.transform = 'scale(1)'" id="complogo">
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </div>
+                                    <div class="namefoll">
+                                        <h2 id="name"> {{comp.Name}}</h2>
+                                        <h3 id="stock"> {{comp.StockName}}</h2>
+
+                                        {% if comp.CompanyID is in follow_list %}
+                                            <span class="hidden" id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% else %}
+                                            <span id="add_{{comp.CompanyID}}"><p class="add"><button id="pb_{{comp.CompanyID}}" class="plus-button">+</button>    Follow this Company</p></span>
+                                            <span class="hidden" id="minus_{{comp.CompanyID}}"><p class="minus"><button id="mb_{{comp.CompanyID}}" class="minus-button">-</button>    Unfollow this Company</p></span>
+                                        {% endif %}                                    
+                                    </div>
+                                </div>
+
+                                {% if comp.CurrentOpinion > 0 %}
+                                    <div class="green-box"> Positive </div>
+                                {% else %}
+                                    {% if comp.CurrentOpinion < 0 %}
+                                        <div class="pink-box"> Negative </div>
+                                    {% else %}
+                                        <div class="yellow-box"> Average </div>
+                                    {% endif %}
+                                {% endif %}
+
+                                <div class="right-side">
+                                    {% if comp.Change == 1 %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="change">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line"></div>
+                                    {% else %}
+                                        <div class="company-details">
+                                            <div class="price">
+                                                <p>$ {{ comp.CurrentPrice}}</p>
+                                            </div>
+                                            <div class="changemin">
+                                                <p> {{ comp.LastChange }}</p>
+                                            </div>
+                                            <div class="size">
+                                                <p> {{ comp.Volume }} stocks</p>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-line-red"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                                
+                            <script>
+
+                                document.querySelector("#pb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr2 = new XMLHttpRequest();
+                                    xhr2.open("GET", "/follow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr2.send();
+                                });
+
+                                document.querySelector("#mb_{{comp.CompanyID}}").addEventListener("click", function() {
+                                    document.getElementById("minus_{{comp.CompanyID}}").classList.add("hidden");
+                                    document.getElementById("add_{{comp.CompanyID}}").classList.remove("hidden");
+
+                                    var xhr3 = new XMLHttpRequest();
+                                    xhr3.open("GET", "/unfollow_company?parameter=" + {{comp.CompanyID}}, true);
+                                    xhr3.send();
+                                });
+                            </script>
+
+                        {% endfor %}
